@@ -1,0 +1,22 @@
+<view class='all' wx:if='{{show_o}}'>
+ <image src='./images/yes.png' style="width:18px;height:18px;" wx:if='{{show_th}}' bindtap='click_qx_t'></image>
+ <image src='./images/no.png' style="width:18px;height:18px;" bindtap='click_qx' wx:if='{{show_f}}'></image>
+ <view class='q_x'>全选</view>
+</view>
+<view class='kind' style='border-bottom:{{border_bottom}};border-top:{{border_top_t}}'>
+<block wx:for="{{coupons}}" wx:key="">
+<view class='k_kind'>
+  <image src='./images/yes.png' style="width:20px;height:18px;" wx:if='{{show_th}}'></image>
+  <image src='./images/no.png' style="width:20px;height:18px;" wx:if='{{show_s}}'></image>
+  <view class='k_name' data-index="{{index}}">
+    <view class='q_x'>{{item.msgContent}}</view>
+    <view class='time'>{{item.createTime}}</view>
+  </view>
+ </view>
+ </block>
+</view>
+<view class='btn' wx:if='{{show_t}}' bindtap='click_bj'>编辑</view>
+<view class='bottom' wx:else>
+<view class='cancel' bindtap='click_cancel'>取消</view>
+<view class='del'>删除</view>
+</view>

@@ -1,0 +1,23 @@
+<!--头部tab切换部分start-->
+<view class='menu' id='menu'>
+<view class="xuanx-ka {{index==current?'select':''}}" wx:for="{{switchtab}}" wx:key='' data-index="{{index}}" bindtap="switchNav" >{{item.name}}</view>
+</view>
+ <!--头部tab切换部分end-->
+<!--切换内容部分start-->
+<scroll-view class='mySwiper' scroll-y="true" style="height:px;overflow-y:scroll">
+        <view class='item' bindtap='clickDetails'>
+             <view style='width:160rpx;height:160rpx;'>
+               <image src='../index/images/o-o.png' style="width:160rpx;height:160rpx;"></image>
+             </view>
+             <view class='xiang-q'>
+               <view class='title'>标准日常护理</view>
+               <view class='time' wx:key='index'>手机号：<text>13817538957</text></view>
+               <view class='price' style='width:300rpx;'>病区床号：<text>C1-202</text></view>
+             </view>
+             <view class='cao-z'>
+              <view class='time'>09:10</view>
+              <view class='name'>李子健</view>
+            </view>
+       </view>
+</scroll-view>
+<!--切换内容部分end-->

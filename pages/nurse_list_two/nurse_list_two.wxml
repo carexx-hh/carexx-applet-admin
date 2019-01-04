@@ -1,0 +1,49 @@
+<!--头部search切换部分start-->
+<view class='header'>
+<from class='b-sea' bindsubmit='searchSubmitFn'>
+<image class='icon-sea' src='../manage/images/search.png' style="width:27rpx;height:27rpx;margin:0 13rpx 0 30rpx;"></image>
+<input class='search' name='input' value="{{searchValue}}"  placeholder='请输入护工姓名' type='text' confirm-type='search' bindconfirm="searchSubmitFn" placeholder-style='font-size:27rpx;color:rgba(165,170,184,1);'/>
+</from>
+</view>
+ <!--头部search部分end-->
+ <view style='font-size:30rpx;font-weight:bold;color:#3B404E;margin:30rpx 0 20rpx 29rpx;'>当前护工</view>
+<!--切换内容部分start-->
+<scroll-view class='mySwiper' scroll-y="true" style="height:{{height}}px;overflow-y:scroll">
+      <block  wx:key="">
+        <view class='item' data-index='{{index}}' bindtap='clickDetails' data-orderno='{{item.orderNo}}' data-orderstatus='{{item.orderStatus}}'>
+             <view style='width:160rpx;height:160rpx;'>
+               <image src='../manage/images/img.png' style="width:160rpx;height:160rpx;"></image>
+             </view>
+             <view class='xiang-q'>
+               <view class='title'>张小小</view>
+               <view class='time' wx:key='index'>所属机构：中山医院</view>
+               <view class='price'>服务机构：华山医院</view>
+                <view class='phone' wx:key='index'>联系方式：13817538957</view>
+             </view>
+             <view class='cao-z'>
+               <view class='zh-tai' value='{{Status}}'>目前服务<text style='color:#5489FD'>1</text>人</view>
+               <view class='ddan-tai' data-orderno='{{item.orderNo}}' data-orderstatus='{{item.orderStatus}}' catchtap='operationClick'>已选择</view>
+            </view>
+       </view>
+      </block>
+</scroll-view>
+<view style='font-size:30rpx;font-weight:bold;color:#3B404E;margin:38rpx 0 21rpx 29rpx;'>其它护工</view>
+<scroll-view class='mySwiper' scroll-y="true" style="height:{{height}}px;overflow-y:scroll">
+      <block  wx:key="">
+        <view class='item' data-index='{{index}}' bindtap='clickDetails' data-orderno='{{item.orderNo}}' data-orderstatus='{{item.orderStatus}}'>
+             <view style='width:160rpx;height:160rpx;'>
+               <image src='../manage/images/img.png' style="width:160rpx;height:160rpx;"></image>
+             </view>
+             <view class='xiang-q'>
+               <view class='title'>王依伊</view>
+               <view class='time' wx:key='index'>所属机构：中山医院</view>
+               <view class='price'>服务机构：华山医院</view>
+                <view class='phone' wx:key='index'>联系方式：13817538957</view>
+             </view>
+             <view class='cao-z'>
+               <view class='zh-tai' value='{{Status}}'>目前服务<text style='color:#5489FD'>2</text>人</view>
+               <!-- <view class='ddan-tai' data-orderno='{{item.orderNo}}' data-orderstatus='{{item.orderStatus}}' catchtap='operationClick'>已选择</view> -->
+            </view>
+       </view>
+      </block>
+</scroll-view>

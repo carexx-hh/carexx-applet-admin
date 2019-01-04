@@ -1,0 +1,86 @@
+page{
+background: #f6f6f6;
+}
+.all{
+width:100%;
+height:88rpx;
+background:rgba(255,255,255,1);
+display: flex;
+align-items: center;
+line-height: 88rpx;
+margin-bottom: 20rpx;
+padding-left: 31rpx;
+box-sizing: border-box;
+}
+.all .q_x{
+font-size:30rpx;
+font-weight:500;
+color:rgba(59,64,78,1);
+margin-left: 29rpx;
+}
+.kind{
+width: 100%;
+padding:0 60rpx 0 31rpx ;
+box-sizing: border-box;
+background:rgba(255,255,255,1);
+border-top: 1rpx solid #DBDBDB;
+}
+.kind .k_kind{
+  width: 100%;
+  height: 140rpx;
+  display: flex;
+  line-height: 140rpx;
+  align-items: center;
+}
+.kind:last-child .k_name{ 
+border-bottom: none;
+}
+.kind .k_kind .k_name{
+  width: 100%;
+  height: 100%;
+  border-bottom: 1rpx solid #DEE5EB;
+  margin-left: 29rpx;
+}
+.kind .k_kind .k_name .q_x{
+  font-size:30rpx;
+  color:#3B404E;
+  margin-top: -20rpx;
+}
+.kind .k_kind .k_name .time{
+  font-size:22rpx;
+  color:#A5AAB8;
+   margin-top: -87rpx;
+}
+.bottom{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 98rpx;
+  display: flex;
+  background: #FFFFFF;
+}
+.bottom .cancel{
+  width: 50%;
+  color: #3B404E;
+  font-size: 34rpx;
+  line-height: 98rpx;
+  text-align: center;
+}
+.bottom .del{
+  width: 50%;
+  color: #5489FD;
+  font-size: 34rpx;
+  line-height: 98rpx;
+  text-align: center;
+}
+.btn{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 98rpx;
+  background: #FFFFFF; 
+  color: #3B404E;
+  font-size: 34rpx;
+  line-height: 98rpx;
+  text-align: center;
+}
