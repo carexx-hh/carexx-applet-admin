@@ -30,8 +30,10 @@ Page({
   onShow: function () {
     var that = this;
     var orderNo = app.orderNo;
+    var serviceStaffId = app.serviceStaffId;
     that.setData({
-      orderNo: orderNo
+      orderNo: orderNo,
+      serviceStaffId: serviceStaffId
     })
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/staff_schedule',
@@ -43,13 +45,36 @@ Page({
         'content-Type': 'application/x-www-form-urlencoded',
         'auth-token': that.data.token
       },
-      success: function (res) {
+      success: function (res){
         console.log(res)
+        var arr=new Array;
+        for(var i=0;i<res.data.data.length;i++){
+          if (res.data.data[i].id == that.data.serviceStaffId){
+            arr.push(res.data.data[i])
+          }
+        }
+        var arr1 = new Array;
+        for (var j = 0; j< res.data.data.length; j++) {
+          if (res.data.data[j].id !== that.data.serviceStaffId) {
+            arr1.push(res.data.data[j])
+          }
+        }
         that.setData({
-          project: res.data.data
+          project: res.data.data,
+          arr: arr[0],
+          arr1: arr1
         })
       }
     });
+  },
+  clickDetails: function (e) {
+    var realName = e.currentTarget.dataset.realname
+    var id = e.currentTarget.dataset.id
+    wx.setStorageSync('nurse_name', realName)
+    wx.setStorageSync('serviceStaffId', id)
+    wx.navigateBack({
+      delta: 1
+    })
   },
   searchSubmitFn: function (e) {
     var that = this;
@@ -67,8 +92,14 @@ Page({
       },
       success: function (res) {
         console.log(res)
+        var arr2 = new Array;
+        for (var j = 0; j < res.data.data.length; j++) {
+          if (res.data.data[j].id !== that.data.serviceStaffId) {
+            arr2.push(res.data.data[j])
+          }
+        }
         that.setData({
-          project: res.data.data
+          arr1: arr2
         })
       }
     });

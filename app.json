@@ -2,8 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/manage/manage",
-    "pages/nurse_information/nurse_information",
     "pages/mine/mine",
+    "pages/nurse_information/nurse_information",
+    "pages/messages/messages",
     "pages/personal_information/personal_information",
     "pages/nurse_certification/nurse_certification",
     "pages/nurse_info_edit/nurse_info_edit",
@@ -16,9 +17,7 @@
     "pages/login/login",
     "pages/Order-details/Order-details",
     "pages/my_order/my_order",
-    "pages/messages/messages",
     "pages/about-us/about-us" 
-    
   ],
   "window": {
     "backgroundTextStyle": "light"

@@ -6,9 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isShow:'',
     project:'',
-    number:'',
   },
 
   /**
@@ -35,15 +33,6 @@ Page({
     var that = this;
     var orderNo = app.orderNo;
     var orderStatus = app.orderStatus;
-    if (orderStatus == 6 || orderStatus ==5){
-      that.setData({
-        isShow:true
-      })
-    }else{
-      that.setData({
-        isShow: false
-      })
-    };
     that.setData({
       orderNo: orderNo,
       orderStatus: orderStatus
@@ -57,19 +46,9 @@ Page({
         },
         success: function (res) {
           console.log(res)
-          if (res.data.data[0].proofType==1){
-            that.setData({
-              number: res.data.data[0].receiptNo
-            })
-          } else if (res.data.data[0].proofType == 2){
-            that.setData({
-              number: res.data.data[0].invoiceNo
-            })
-          } else if (res.data.data[0].proofType == null) {
-            that.setData({
-              number: '无'
-            })
-          }
+          var newdata = new Date();
+          var newdddatas = ((newdata - res.data.data[0].serviceStartTime) / 86400000).toFixed(1);
+          var serviceDays = ((res.data.data[0].orderServiceEndTime - res.data.data[0].serviceStartTime) / 86400000).toFixed(1);
           timestamp1=new Date(res.data.data[0].serviceStartTime);
             y = timestamp1.getFullYear(),
             m = timestamp1.getMonth() + 1,
@@ -83,54 +62,52 @@ Page({
           that.setData({
             project:res.data.data[0],
             starttime: starttime,
-            endtime: endtime
+            endtime: endtime,
+            serviceDays: serviceDays,
+            newdddatas: newdddatas
           })
         }
       });
-    })
-  },
-  btnClick:function(){
-    var app=getApp();
-    var that=this;
-    if (that.data.orderStatus==1){
       wx.request({
-        url: app.globalData.baseUrl + '/customerorder/cancel/' + that.data.orderNo,
+        url: app.globalData.baseUrl + '/customerorderschedule/all_schedule/' + that.data.orderNo,
         method: 'get',
         header: {
           'content-Type': 'application/x-www-form-urlencoded',
           'auth-token': that.data.token
         },
         success: function (res) {
-          if (res.data.code == 200) {
-            wx.showModal({
-              content: '取消成功',
-              cancelText:'返回首页',
-              confirmText:'查看订单',
-              confirmColor: '#5489FD',
-              success(res) {
-                if (res.confirm) {
-                  wx.switchTab({
-                    url: '../order/order',
-                  })
-                } else if (res.cancel) {
-                  wx.switchTab({
-                    url: '../index/index',
-                  })
-                }
-              }
-            })
-    }
-    }
-  })
-    } else if (that.data.orderStatus ==4){
-      var app=getApp()
-      app.orderNo = that.data.orderNo
-      wx.navigateTo({
-        url: '../order-confirm/order-confirm',
-      })
-    }
+          console.log(res)
+          var timestamp3 = [];
+          for (var i = 0; i < res.data.data.length; i++) {
+            timestamp3.push(new Date(res.data.data[i].serviceStartTime));
+            var arr1 = [];
+            for (var j = 0; j < timestamp3.length; j++) {
+                y = timestamp3[j].getFullYear(),
+                m = timestamp3[j].getMonth() + 1,
+                d = timestamp3[j].getDate();
+                arr1.push(y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + timestamp3[j].toTimeString().substr(0, 8));
+            }
+          }
+          var timestamp4 = [];
+          for (var i = 0; i < res.data.data.length; i++) {
+            timestamp4.push(new Date(res.data.data[i].serviceEndTime));
+            var arr2 = [];
+            for (var j = 0; j < timestamp4.length; j++) {
+              y = timestamp4[j].getFullYear(),
+                m = timestamp4[j].getMonth() + 1,
+                d = timestamp4[j].getDate();
+              arr2.push(y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + timestamp4[j].toTimeString().substr(0, 8));
+            }
+          }
+          that.setData({
+            serviceinfo:res.data.data,
+            arr1:arr1,
+            arr2:arr2
+          })
+        }
+      });
+    })
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */

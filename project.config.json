@@ -14,7 +14,7 @@
 		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.4.3",
+	"libVersion": "2.4.4",
 	"appid": "wx91de5f5aaa534102",
 	"projectname": "carexx-supportManagement",
 	"debugOptions": {

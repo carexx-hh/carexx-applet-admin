@@ -9,6 +9,7 @@ Page({
   data: {
     userInfo:{},
     show:false,
+    show_data:false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -35,7 +36,7 @@ Page({
   onShow: function () {
     var that=this;
     wx.request({
-      url: app.globalData.baseUrl + '/acluser/get_userId/' + that.data.userId,
+      url: app.globalData.baseUrl + '/msg/count_unread/' + that.data.userId,
       method: 'get',
       header: {
         'content-Type': 'application/x-www-form-urlencoded',
@@ -43,9 +44,9 @@ Page({
       },
       success: function (res) {
         console.log(res)
-        that.setData({
-          coupons: res.data.data
-        })
+         that.setData({
+           data:res.data.data
+         })
       }
     });
     wx.request({
@@ -62,9 +63,29 @@ Page({
             show: true,
             message_nurse: res.data.data.length
           })
+        }else{
+          that.setData({
+            show: false,
+          })
         }
       }
     });
+    wx.request({
+      url: app.globalData.baseUrl + '/acluser/get_userId/' + that.data.userId,
+      method: 'get',
+      header: {
+        'content-Type': 'application/x-www-form-urlencoded',
+        'auth-token': that.data.token
+      },
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          coupons: res.data.data
+        })
+      }
+    });
+ 
+
   },
   click_details:function(){
      var that=this;
@@ -82,6 +103,11 @@ Page({
     wx.navigateTo({
       url: '../messages/messages',
     })  
+  },
+  click_order:function(){
+    wx.navigateTo({
+      url: '../my_order/my_order',
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏

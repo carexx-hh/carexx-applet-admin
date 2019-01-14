@@ -16,7 +16,7 @@
              <view class='xiang-q'>
                <view class='title'>{{item.realName}}</view>
                <view class='time' wx:key='index'>所属机构：{{item.instName}}</view>
-               <view class='price'>服务机构：{{item.instSysName}}</view>
+               <view class='price'>服务机构：{{item.serviceInstName}}</view>
                 <view class='phone' wx:key='index'>联系方式：{{item.phone}}</view>
              </view>
              <view class='cao-z'>

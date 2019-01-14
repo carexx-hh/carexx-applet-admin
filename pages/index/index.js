@@ -48,29 +48,77 @@ Page({
     },function(){
       if(that.data.current==0){
         wx.request({
-          url: app.globalData.baseUrl + '/customerorder/by_order_status/1/' + that.data.instId,
+          url: app.globalData.baseUrl + '/customerorder/by_orderStatus/1/' + that.data.instId,
           method: 'get',
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
             'auth-token': that.data.token
           },
           success: function (res) {
+            var timestamp = [];
+            for (var i = 0; i < res.data.data.length; i++) {
+              timestamp.push(new Date(res.data.data[i].createTime));
+              var arr = [];
+              for (var j = 0; j < timestamp.length; j++) {
+                y = timestamp[j].getFullYear(),
+                  m = timestamp[j].getMonth() + 1,
+                  d = timestamp[j].getDate();
+                arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
+              }
+            }
+            var timestamp1 = [];
+            for (var m = 0; m < res.data.data.length; m++) {
+              timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
+              var arr1 = [];
+              for (var k = 0; k < timestamp.length; k++) {
+                arr1.push(timestamp[k].toTimeString().substr(0, 5));
+              }
+            }
+            var newtime = new Date().toDateString()
             that.setData({
               coupons: res.data.data,
+              time: arr,
+              newtime: newtime,
+              time2: arr1,
+              time3: timestamp1
             })
           }
         });
       } else if (that.data.current == 1){
         wx.request({
-          url: app.globalData.baseUrl + '/customerorder/by_order_status/3/' + that.data.instId,
+          url: app.globalData.baseUrl + '/customerorder/by_orderStatus/4/' + that.data.instId,
           method: 'get',
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
             'auth-token': that.data.token
           },
           success: function (res) {
+            var timestamp = [];
+            for (var i = 0; i < res.data.data.length; i++) {
+              timestamp.push(new Date(res.data.data[i].createTime));
+              var arr = [];
+              for (var j = 0; j < timestamp.length; j++) {
+                y = timestamp[j].getFullYear(),
+                  m = timestamp[j].getMonth() + 1,
+                  d = timestamp[j].getDate();
+                arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
+              }
+            }
+            var timestamp1 = [];
+            for (var m = 0; m < res.data.data.length; m++) {
+              timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
+              var arr1 = [];
+              for (var k = 0; k < timestamp.length; k++) {
+                arr1.push(timestamp[k].toTimeString().substr(0, 5));
+              }
+            }
+            var newtime = new Date().toDateString()
             that.setData({
               coupons: res.data.data,
+              time: arr,
+              newtime: newtime,
+              time2: arr1,
+              time3: timestamp1
             })
           }
         });
@@ -103,15 +151,39 @@ Page({
       current:0
     })
       wx.request({
-        url: app.globalData.baseUrl + '/customerorder/by_order_status/1/' + that.data.instId,
+        url: app.globalData.baseUrl + '/customerorder/by_orderStatus/1/' + that.data.instId,
         method: 'get',
         header: {
           'content-Type': 'application/x-www-form-urlencoded',
           'auth-token': that.data.token
         },
         success: function (res){
+          var timestamp = [];
+          for (var i = 0; i < res.data.data.length; i++) {
+            timestamp.push(new Date(res.data.data[i].createTime));
+            var arr = [];
+            for (var j = 0; j < timestamp.length; j++) {
+                y = timestamp[j].getFullYear(),
+                m = timestamp[j].getMonth() + 1,
+                d = timestamp[j].getDate();
+              arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d)+'号');
+            }
+          }
+            var timestamp1 = [];
+            for (var m = 0; m < res.data.data.length; m++) {
+              timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
+              var arr1 = [];
+              for (var k = 0; k < timestamp.length; k++) {
+                arr1.push(timestamp[k].toTimeString().substr(0, 5));
+              }
+            }
+            var newtime = new Date().toDateString()
           that.setData({
-            coupons: res.data.data,
+            coupons: res.data.data,   
+            time:arr,
+            newtime:newtime,
+            time2:arr1,
+            time3: timestamp1
           })
         }
       });

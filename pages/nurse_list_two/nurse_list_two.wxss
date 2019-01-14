@@ -2,6 +2,8 @@ page{
   background: #f6f6f6;
 }
 .header{
+  position: fixed;
+  top:0;
   height: 128rpx;
   width: 100%;
   padding:27rpx 30rpx;
@@ -69,7 +71,7 @@ color:rgba(165,170,184,1);
 }
 .item .xiang-q .price{
 margin-top: 11rpx;
-font-size:24rpx;
+font-size:26rpx;
 color:rgba(165,170,184,1);
 }
 .item .cao-z .zh-tai{

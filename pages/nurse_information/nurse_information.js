@@ -86,15 +86,21 @@ Page({
                   confirmText: '返回',
                   confirmColor: '#5489FD',
                   success(res) {
-                    if (res.confirm) {
+                    if (res.confirm){
                       wx.switchTab({
                         url: '../manage/manage',
                       })
-                    } else if (res.cancel) {
+                    }else if (res.cancel) {
                       console.log('用户点击取消')
                     }
                   }
                 })
+              }else{
+                wx.showToast({
+                  title:'取消失败,'+res.data.errorMsg,
+                  icon: 'none',
+                  duration: 2500,
+                });
               }
             }
           });

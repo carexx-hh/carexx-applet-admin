@@ -13,7 +13,7 @@ Page({
     wx.getUserInfo({
       lang: "zh_CN",
       success: res => {
-        var region = res.userInfo.province + '/' + res.userInfo.city
+        var region = res.userInfo.province + res.userInfo.city
         that.setData({
           userInfo:res.userInfo
         })
@@ -31,7 +31,7 @@ Page({
                   nickname: that.data.userInfo.nickName,
                   avatar: that.data.userInfo.avatarUrl,
                   sex: that.data.userInfo.gender,
-                  region: region,
+                  region:region,
                   acctNo: e.detail.value.input_name,
                   loginPass: e.detail.value.input_password,
                 }, 
@@ -40,15 +40,24 @@ Page({
                 },
                 success: function (res){
                   console.log(res)
-                  console.log('token=' + res.data.data.token)
-                  console.log('openId=' + res.data.data.openId)
-                  wx.setStorageSync('token', res.data.data.token)
-                  wx.setStorageSync('openId', res.data.data.openId)
-                  wx.setStorageSync('instId', res.data.data.instId)
-                  wx.setStorageSync('userId', res.data.data.userId)
-                  wx.switchTab({
-                    url: '../index/index',
-                  })
+                  if(res.data.code==200){
+                    console.log('token=' + res.data.data.token)
+                    console.log('openId=' + res.data.data.openId)
+                    wx.setStorageSync('token', res.data.data.token)
+                    wx.setStorageSync('openId', res.data.data.openId)
+                    wx.setStorageSync('instId', res.data.data.instId)
+                    wx.setStorageSync('userId', res.data.data.userId)
+                    wx.switchTab({
+                      url: '../index/index',
+                    })
+                  }else{
+                    wx.showToast({
+                      title: res.data.errorMsg,
+                      icon: 'none',
+                      duration: 1000,
+                    });
+                  }
+                
                 },
               })
             } else {

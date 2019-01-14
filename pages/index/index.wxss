@@ -60,7 +60,10 @@ font-size:24rpx;
 color:rgba(165,170,184,1);
 }
 .item .cao-z .zh-tai{
-float: right;
+   width: 100%;
+  height: 86rpx;
+   display: flex;
+  justify-content: flex-end;
 margin-top: 10rpx;
 font-size:28rpx;
 color:#A5AAB8;
@@ -72,10 +75,13 @@ font-size:28rpx;
 color:rgba(165,170,184,1);
 }
 .item .cao-z .ddan-tai{
+  width: 100%;
+  height: 86rpx;
+  display: flex;
+  justify-content: flex-end;
+   align-items:flex-end;
 color:#5489FD;
 font-size:26rpx;
-float:right;
-margin-top:85rpx;
 }
 .mySwiper {
   width: 100%;

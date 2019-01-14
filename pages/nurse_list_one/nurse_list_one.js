@@ -54,8 +54,8 @@ Page({
   clickDetails:function(e){
     var realName = e.currentTarget.dataset.realname
     var id = e.currentTarget.dataset.id
-    app.realName = realName
-    app.id = id
+    wx.setStorageSync('nurse_name', realName)
+    wx.setStorageSync('serviceStaffId', id)
     wx.navigateBack({
       delta: 1
     })

@@ -1,6 +1,6 @@
 <view class='notice' style='width:100%;height:88rpx;background:#E7F3FF;line-height:88rpx;display:flex;align-items:center'>
 <image src='./images/notice.png' style='width:33rpx;height:29rpx;margin-left:30rpx;'></image>
-<view class='notice_s' style='font-size:26rpx;color:#5489FD;margin-left:19rpx;'>当前订单已完成</view>
+<view class='notice_s' style='font-size:26rpx;color:#5489FD;margin-left:19rpx;'>{{orderStatus==4?"当前订单未完成":"当前订单已完成"}}</view>
 </view>
 <view class='header'>
 <image src='../index/images/o-o.png' style="width:160rpx;height:160rpx;"></image>
@@ -59,7 +59,7 @@
 </view>
 </view>
 <!--  -->
-<view class='kind' wx:if='{{isShow}}'>
+<view class='kind' wx:if='{{orderStatus!==4}}'>
 <view class='kind-name'>订单结束日期</view>
 <view class='t-k-name' style='width:40%;'>
 <text>{{endtime}}</text>
@@ -74,6 +74,7 @@
   </view>
 </view>
 <!--  -->
+<block wx:if='{{orderStatus==4}}'>
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;'>
 <view class='kind'>
 <view class='kind-name'>服务人员</view>
@@ -81,7 +82,6 @@
 <text>{{project.staffName}}</text>
 </view>
 </view>
-<!--  -->
 <view class='kind'>
 <view class='kind-name'>联系方式</view>
 <view class='t-k-name' style='width:40%;'>
@@ -89,27 +89,32 @@
 </view>
 </view>
 </view>
+</block>
 <!--  -->
-<view class='list' style='padding-left:30rpx;box-sizing:border-box;'>
-<view class='kind'>
-<view class='kind-name'>王雪  17636564451</view>
-<view class='t-k-name' style='width:40%;'>
-<text>2018.05.29</text>
+<block   wx:else>
+<view class='list' style='padding-left:30rpx;box-sizing:border-box;height:150rpx' wx:for='{{serviceinfo}}' wx:key='index'>
+<view class='kind' style='border-bottom:none;'>
+<view class='kind-name' style='width:20%'>{{item.realName}}</view>
+<view class='kind-name'style='width:80%'>{{item.phone}}</view>
 </view>
+<view class='t-k-name' style='width:100%;margin-top:-20rpx;'>
+<text style='color:rgba(165,170,184,1);font-size:26rpx;' wx:key='index'>{{arr1[index]}}  ---  {{arr2[index]}}</text>
 </view> 
 </view>
+</block>
 <!--  -->
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;margin-top:20rpx;height:170rpx;'>
 <view class='kind' style='display:block;border-bottom:none;'>
 <view class='kind-name' style='line-height:99rpx;'>备注</view>
-<view class='t-k-name' style='width:40%;line-height:40rpx;display:block'>
-<text>无</text>
+<view class='t-k-name' style='width:100%;line-height:40rpx;display:block'>
+<text>{{project.orderRemark}}</text>
 </view>
 </view> 
 </view>
 <!--  -->
-<view class='bottom'>
-<view   class='z-price'><text style='color:#767C8C'>合计:</text>￥<text class='shu-zi' style='font-size:46rpx;'>{{project.orderAmt}}</text>.00<text style='color:#767C8C'>（共服务2天）</text>
+<view class='bottom' wx:if='{{orderStatus!==4}}'>
+<view   class='z-price'><text style='color:#767C8C'>合计:</text>￥<text class='shu-zi' style='font-size:46rpx;'>{{project.orderAmt}}</text>.00<text style='color:#767C8C'>（共服务{{serviceDays}}天）</text>
 </view>
 </view>
+<view class='bottom' wx:else style='font-size:28rpx;color:#A5AAB8;'>已服务{{newdddatas}}天</view>
 

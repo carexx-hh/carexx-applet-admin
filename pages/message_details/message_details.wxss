@@ -83,7 +83,9 @@ font-family:PingFang;
 color:rgba(59,64,78,1);
 }
 .list .kind .t-k-name{
-  width:100%;
+  display: flex;
+  justify-content: flex-end;
+  width:50%;
   font-size:28rpx;
   color:rgba(165,170,184,1);
 }

@@ -6,17 +6,18 @@
 <!--切换内容部分start-->
 <scroll-view class='mySwiper' scroll-y="true" style="height:{{height}}px;overflow-y:scroll">
       <block wx:for="{{coupons}}" wx:key="">
-        <view class='item' data-index='{{index}}' bindtap='clickDetails' data-orderno='{{item.orderNo}}' data-orderstatus='{{item.orderStatus}}'>
+        <view class='item'  bindtap='clickDetails' data-orderno='{{item.orderNo}}' data-orderstatus='{{item.orderStatus}}'>
              <view style='width:160rpx;height:160rpx;'>
                <image src='./images/o-o.png' style="width:160rpx;height:160rpx;"></image>
              </view>
-             <view class='xiang-q'>
+             <view   class='xiang-q'>
                <view class='title'>{{item.serviceName}}</view>
                <view class='time' wx:key='index'>手机号：<text>{{item.patientPhone}}</text></view>
                <view class='price'>病区床号：<text class='shu-zi'>{{item.inpatientArea}}-{{item.accurateAddress}}</text></view>
              </view>
              <view class='cao-z'>
-               <view class='zh-tai'>{{item.createTime}}</view>
+               <view class='zh-tai' wx:key='index' wx:if="{{newtime==time3[index]}}" >{{time2[index]}}</view>
+               <view class='zh-tai' wx:key='index' wx:else>{{time[index]}}</view>
                <view class='ddan-tai'>{{item.patientName}}</view>
             </view>
        </view>

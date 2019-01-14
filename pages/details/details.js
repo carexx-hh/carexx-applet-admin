@@ -10,9 +10,8 @@ Page({
     timeindex: 0,
     timearray: [],
     start_name:'请选择',
-    nurse:'请选择'
+    nurse_name:'请选择'
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -42,17 +41,13 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function (){
     var that = this;
     var orderNo = app.orderNo;
-    var realName = app.realName;
     var orderStatus = app.orderStatus;
-    var id = app.id;
     that.setData({
       orderNo: orderNo,
-      nurse: realName,
-      id: id,
-      orderStatus: orderStatus
+      orderStatus: orderStatus,
     })
     wx.request({
       url: app.globalData.baseUrl + '/customerorder/detail/' + that.data.orderNo,
@@ -62,14 +57,21 @@ Page({
         'auth-token': that.data.token
       },
       success: function (res) {
-        if (res.data.data[0].staffName==null){
+        console.log(res)
+        if (res.data.data[0].staffName == null && !wx.getStorageSync('nurse_name') && !wx.getStorageSync('serviceStaffId')){
           that.setData({
-            nurse:'请选择'
+            nurse_name:that.data.nurse_name,
           })
-        }else{
+        } else if (res.data.data[0].staffName !== null && !wx.getStorageSync('nurse_name') && !wx.getStorageSync('serviceStaffId')){
           that.setData({
-            nurse: res.data.data[0].staffName
+            nurse_name: res.data.data[0].staffName,
+            serviceStaffId: res.data.data[0].serviceStaffId,
           })
+        } else if (wx.getStorageSync('nurse_name') && wx.getStorageSync('serviceStaffId')){
+        that.setData({
+          nurse_name: wx.getStorageSync('nurse_name'),
+          serviceStaffId: wx.getStorageSync('serviceStaffId'),
+        })
         }
         timestamp1 = new Date(res.data.data[0].serviceStartTime);
           y = timestamp1.getFullYear(),
@@ -89,7 +91,7 @@ Page({
               'content-Type': 'application/x-www-form-urlencoded',
               'auth-token': that.data.token
             },
-            success: function (res) {
+            success: function (res){
               console.log(res)
               var nurse_bl=[];
               var nurse_id=[];
@@ -115,6 +117,8 @@ Page({
     var that=this;
     var orderNo = that.data.orderNo
     app.orderNo = orderNo;
+    var serviceStaffId = that.data.serviceStaffId
+    app.serviceStaffId = serviceStaffId;
     if (that.data.serviceStatus==null){
       wx.navigateTo({
         url: '../nurse_list_one/nurse_list_one',
@@ -132,7 +136,7 @@ Page({
       method: 'post',
       data: {
         orderNo: that.data.orderNo,
-        serviceStaffId: that.data.id,
+        serviceStaffId: that.data.serviceStaffId,
         workTypeSettleId: that.data.nurseid
       },
       header: {
@@ -150,7 +154,7 @@ Page({
           })
         }else{
           wx.showToast({
-            title: '派单失败',
+            title: res.data.errorMsg,
             icon: 'none',
             duration: 2500
           })
@@ -162,14 +166,19 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    console.log('index---------onHide()')
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.removeStorage({
+      key:'serviceStaffId'
+    })
+    wx.removeStorage({
+      key: 'nurse_name',
+    })
   },
 
   /**

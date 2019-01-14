@@ -2,12 +2,16 @@ page{
   background: #f6f6f6;
 }
 .header{
+  position: fixed;
+  top:0;
   height: 128rpx;
   width: 100%;
   padding:27rpx 30rpx;
   box-sizing: border-box;
   align-items: center;
   line-height: 128rpx;
+  background: #f6f6f6;
+  z-index: 999;
 }
 .header .b-sea{
 display: flex;
@@ -92,7 +96,8 @@ text-align: center;
 }
 .mySwiper {
   width: 100%;
-  background: #f6f6f6
+  background: #f6f6f6;
+  margin-top: 128rpx;
 }
 .mySwiper swiper-item {
   overflow-y: scroll;
