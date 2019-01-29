@@ -41,7 +41,7 @@ Page({
     },function(){
       if(that.data.current==0){
         wx.request({
-          url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/' + that.data.instId + '/' + '1',
+          url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/1',
           method: 'get',
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
@@ -58,7 +58,7 @@ Page({
         });
       } else if (that.data.current == 1){
         wx.request({
-          url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/' + that.data.instId + '/' + '2',
+          url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/2',
           method: 'get',
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
@@ -75,7 +75,7 @@ Page({
         });
       } else if (that.data.current == 2) {
         wx.request({
-          url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/' + that.data.instId + '/' + '3',
+          url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/3',
           method: 'get',
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
@@ -110,7 +110,7 @@ Page({
       current: 0
     })
     wx.request({
-      url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/'+ that.data.instId +'/'+'1',
+      url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/1',
       method: 'get',
       header: {
         'content-Type': 'application/x-www-form-urlencoded',
@@ -129,7 +129,7 @@ Page({
     var certificationStatus = e.currentTarget.dataset.certificationstatus
     var id = e.currentTarget.dataset.id
     var instName = e.currentTarget.dataset.instname
-    var serviceInstName = e.currentTarget.dataset.serviceInstname
+    var serviceInstName = e.currentTarget.dataset.serviceinstname
     var realName = e.currentTarget.dataset.realname
     var idNo = e.currentTarget.dataset.idno
     var sex = e.currentTarget.dataset.sex
@@ -161,7 +161,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.switchTab({
+      url: '../mine/mine',
+    })
   },
 
   /**

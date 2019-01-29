@@ -126,7 +126,7 @@ Page({
                       wx.navigateTo({
                         url: '../nurse_certification/nurse_certification',
                       })
-                    } else if (res.cancel) {
+                    }else if (res.cancel) {
                       console.log('用户点击取消')
                     }
                   }

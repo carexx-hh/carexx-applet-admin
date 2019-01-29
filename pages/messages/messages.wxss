@@ -20,7 +20,7 @@ margin-left: 29rpx;
 }
 .kind{
 width: 100%;
-padding:0 60rpx 0 31rpx ;
+padding:0 31rpx 0 31rpx ;
 box-sizing: border-box;
 background:rgba(255,255,255,1);
 background: #FFFFFF;

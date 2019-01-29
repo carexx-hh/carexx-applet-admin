@@ -76,7 +76,7 @@ color:rgba(165,170,184,1);
 }
 .item .cao-z .ddan-tai{
   width: 100%;
-  height: 86rpx;
+  height: 73rpx;
   display: flex;
   justify-content: flex-end;
    align-items:flex-end;

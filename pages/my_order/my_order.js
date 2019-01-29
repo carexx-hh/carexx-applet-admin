@@ -37,8 +37,12 @@ Page({
     }, function () {
       if (that.data.current == 0) {
         wx.request({
-          url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus/4/1/' + that.data.instId,
-          method: 'get',
+          url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus',
+          method: 'post',
+          data:{
+            orderStatus:4,
+            serviceStatus:1
+          },
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
             'auth-token': that.data.token
@@ -64,8 +68,12 @@ Page({
         });
       } else if (that.data.current == 1) {
         wx.request({
-          url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus/5,6/2/' + that.data.instId,
-          method: 'get',
+          url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus' ,
+          method: 'post',
+          data: {
+            orderStatus: '5',
+            serviceStatus: 2
+          },
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
             'auth-token': that.data.token
@@ -110,8 +118,12 @@ Page({
       current: 0
     })
     wx.request({
-      url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus/4/1/' + that.data.instId,
-      method: 'get',
+      url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus',
+      method: 'post',
+      data: {
+        orderStatus: 4,
+        serviceStatus: 1
+      },
       header: {
         'content-Type': 'application/x-www-form-urlencoded',
         'auth-token': that.data.token

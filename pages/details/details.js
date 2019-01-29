@@ -85,7 +85,7 @@ Page({
           workTypeId: res.data.data[0].workTypeId
         },function(){
           wx.request({
-            url: app.globalData.baseUrl + '/instworktypesettle/list_all/' + that.data.workTypeId + '/'+wx.getStorageSync('instId'),
+            url: app.globalData.baseUrl + '/instworktypesettle/list_all/' + that.data.workTypeId,
             method: 'get',
             header: {
               'content-Type': 'application/x-www-form-urlencoded',
@@ -166,7 +166,6 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    console.log('index---------onHide()')
   },
 
   /**

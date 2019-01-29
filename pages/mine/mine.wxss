@@ -19,7 +19,6 @@ box-sizing: border-box;
 }
 .right .name{
   width: 100%;
-  margin-left: 50rpx;
   margin-top: 14rpx;
   font-size:30rpx;
   font-weight:bold;
@@ -30,7 +29,6 @@ font-size:30rpx;
 font-weight:500;
 color:rgba(255,255,255,1);
 margin-top: 20rpx;
-margin-left: 48rpx;
 }
 .b-t{
   width: 100%;

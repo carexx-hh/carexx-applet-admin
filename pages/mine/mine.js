@@ -19,7 +19,6 @@ Page({
     that.setData({
       userInfo:wx.getStorageSync('userInfo'),
       token: wx.getStorageSync('token'),
-      userId: wx.getStorageSync('userId'),
       instId: wx.getStorageSync('instId')
      })
     },
@@ -36,7 +35,7 @@ Page({
   onShow: function () {
     var that=this;
     wx.request({
-      url: app.globalData.baseUrl + '/msg/count_unread/' + that.data.userId,
+      url: app.globalData.baseUrl + '/msg/count_unread/',
       method: 'get',
       header: {
         'content-Type': 'application/x-www-form-urlencoded',
@@ -50,7 +49,7 @@ Page({
       }
     });
     wx.request({
-      url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/' + that.data.instId + '/' + '1',
+      url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/1',
       method: 'get',
       header: {
         'content-Type': 'application/x-www-form-urlencoded',
@@ -71,7 +70,7 @@ Page({
       }
     });
     wx.request({
-      url: app.globalData.baseUrl + '/acluser/get_userId/' + that.data.userId,
+      url: app.globalData.baseUrl + '/acluser/get_userId',
       method: 'get',
       header: {
         'content-Type': 'application/x-www-form-urlencoded',

@@ -20,7 +20,6 @@ Page({
     var that = this;
     that.setData({
       token: wx.getStorageSync('token'),
-      userId: wx.getStorageSync('userId')
     });
   },
 
@@ -37,7 +36,7 @@ Page({
   onShow: function (e){
     var that=this;
     wx.request({
-      url: app.globalData.baseUrl + '/msg/all/' + that.data.userId,
+      url: app.globalData.baseUrl + '/msg/all',
       method: 'get',
       header: {
         'content-Type': 'application/x-www-form-urlencoded',
@@ -214,7 +213,7 @@ Page({
   click_status:function(e){
     var that=this
     wx.request({
-      url: app.globalData.baseUrl + '/msg/read/' + e.currentTarget.dataset.id + '/' + that.data.userId,
+      url: app.globalData.baseUrl + '/msg/read/' + e.currentTarget.dataset.id,
       method: 'get',
       header: {
         'content-Type': 'application/x-www-form-urlencoded',

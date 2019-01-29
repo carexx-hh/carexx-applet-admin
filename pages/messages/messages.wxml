@@ -11,7 +11,7 @@
  <icon wx:else type="success" color="#5489FD" size='20'  bindtap="selectList" data-index="{{index}}"/>
  </block>
  <view class='right' bindtap='click_status' data-id='{{item.id}}'data-orderno='{{item.orderNo}}' data-orderstatus='{{item.orderStatus}}' data-msgstatus='{{item.msgStatus}}'>
- <view class='q_x' style='font-size:30rpx;color:{{item.msgStatus==1?"#3B404E":"#A5AAB8"}}'>{{item.msgContent}}</view>
+ <view class='q_x' style='font-size:26rpx;color:{{item.msgStatus==1?"#3B404E":"#A5AAB8"}}'>{{item.msgContent}}</view>
  <view class='time'style='font-size:22rpx;color:#A5AAB8' wx:key="index">{{time[index]}}</view>
  </view>
   </view>

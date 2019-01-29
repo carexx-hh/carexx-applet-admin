@@ -29,24 +29,12 @@ Page({
    */
   onShow: function () {
     var that = this;
-    var realName = app.realName;
     var id = app.id;
-    var idNo = app.idNo;
-    var phone = app.phone;
-    var address = app.address;
-    var instName = app.instName;
-    var serviceInstName = app.serviceInstName;
     that.setData({
-      realName: realName,
-      idNo: idNo,
       id: id,
-      phone: phone,
-      address: address,
-      instName: instName,
-      serviceInstName: serviceInstName
     },function(){
       wx.request({
-        url: app.globalData.baseUrl + '/inststaff/get_id/'+that.data.id,
+        url: app.globalData.baseUrl + '/inststaff/get_staffId/'+that.data.id,
         method: 'get',
         header: {
           'content-Type': 'application/x-www-form-urlencoded',
@@ -128,7 +116,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+    wx.switchTab({
+      url: '../manage/manage',
+    })
   },
 
   /**

@@ -50,7 +50,6 @@ Page({
     })
   },
   formSubmit: function (e) {
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var that = this;  
     var realName = e.detail.value.input_name;
     var phone = e.detail.value.input_phone;
@@ -63,9 +62,49 @@ Page({
       that.setData({
         realName: that.data.coupons.realName
       })
-    }else{
+    } else if (realName !== ''){
       that.setData({
         realName: e.detail.value.input_name
+      })
+    };
+    // 
+    if (address == '') {
+      that.setData({
+        address: that.data.coupons.address
+      })
+    } else if (address !== '') {
+      that.setData({
+        address: e.detail.value.input_address
+      })
+    };
+    // 
+    if (instName == '') {
+      that.setData({
+        instName: that.data.coupons.instName
+      })
+    } else if (realName !== '') {
+      that.setData({
+        instName: e.detail.value.input_instName
+      })
+    };
+    // 
+    if (serviceInstName == '') {
+      that.setData({
+        serviceInstName: that.data.coupons.serviceInstName
+      })
+    } else if (realName !== '') {
+      that.setData({
+        serviceInstName: e.detail.value.input_serviceInstName
+      })
+    };
+    // 
+    if (phone == '') {
+      that.setData({
+        phone: that.data.coupons.phone
+      })
+    } else if (phone !== '') {
+      that.setData({
+        phone: e.detail.value.input_phone
       })
     };
     // 
@@ -73,7 +112,7 @@ Page({
       that.setData({
         idNo: that.data.coupons.idNo	
       })
-    } else {
+    } else if (idNo !== ''){
       that.setData({
         idNo: e.detail.value.input_idNo	
       })
@@ -85,10 +124,10 @@ Page({
       })
     } else {
       that.setData({
-        personType: that.data.coupons.entryDate
+        entryDate: that.data.coupons.entryDate
       })
     };
-    if (that.data.coupons.entryDate == '' || that.data.coupons.leaveDate == null) {
+    if (that.data.coupons.leaveDate == '' || that.data.coupons.leaveDate == null) {
       that.setData({
         leaveDate:''
       })
@@ -111,7 +150,7 @@ Page({
         sex: 2
       })
     }
-      wx.request({
+    wx.request({
         url: app.globalData.baseUrl + '/inststaff/modify',
         method: 'POST',
         header: {
@@ -122,9 +161,9 @@ Page({
           id:that.data.id,
           realName:that.data.realName,
           idNo: that.data.idNo,
-          address:address,
-          phone:phone,
-          instName:instName,
+          address: that.data.address,
+          phone: that.data.phone,
+          instName: that.data.instName,
           serviceInstId: that.data.coupons.serviceInstId,
           sex:that.data.sex,
           photo:'',
@@ -140,12 +179,20 @@ Page({
             wx.showToast({
               title: '已保存',
               icon:'success',
-              duration:2500,
+              duration:300,
               success(res){
-                wx.navigateTo({
-                  url: '../nurse_information/nurse_information',
-                })
+                setTimeout(function () {
+                  wx.navigateTo({
+                    url: '../nurse_information/nurse_information',
+                  })
+                },500);
               }
+            })
+          }else{
+            wx.showToast({
+              title: '修改失败',
+              icon: 'success',
+              duration: 1500,
             })
           }
         }

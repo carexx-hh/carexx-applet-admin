@@ -1,13 +1,13 @@
 <view class='header'>
-<view class='left'>
+<view class='left' style='width:30%'>
 <image  src="{{userInfo.avatarUrl}}"  class='tx'></image>
 </view>
- <view class='right'>
+ <view class='right' style='width:40%'>
  <view class='name'>管理员-{{coupons.name}}</view>
  <view class='phone' bindtap='bindphone' data-phone='{{phone}}'>{{coupons.account}}</view>
  </view>
- <view style='display:flex;justify-content:flex-end;width:32%;' bindtap='click_details'>
- <image src='./images/fan_h.png' class='j-t' style='width:18rpx;height:30rpx;'></image>
+ <view style='display:flex;justify-content:flex-end;width:30%;'>
+ <image src='./images/fan_h.png' class='j-t' style='width:18rpx;height:30rpx;' bindtap='click_details'></image>
  </view>
 </view>
 <view class='middle'>

@@ -48,7 +48,7 @@ Page({
     },function(){
       if(that.data.current==0){
         wx.request({
-          url: app.globalData.baseUrl + '/customerorder/by_orderStatus/1/' + that.data.instId,
+          url: app.globalData.baseUrl + '/customerorder/wait_schedule',
           method: 'get',
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
@@ -86,8 +86,8 @@ Page({
         });
       } else if (that.data.current == 1){
         wx.request({
-          url: app.globalData.baseUrl + '/customerorder/by_orderStatus/4/' + that.data.instId,
-          method: 'get',
+          url: app.globalData.baseUrl + '/customerorder/do_orderSchedule',
+          method: 'post',
           header: {
             'content-Type': 'application/x-www-form-urlencoded',
             'auth-token': that.data.token
@@ -151,7 +151,7 @@ Page({
       current:0
     })
       wx.request({
-        url: app.globalData.baseUrl + '/customerorder/by_orderStatus/1/' + that.data.instId,
+        url: app.globalData.baseUrl + '/customerorder/wait_schedule',
         method: 'get',
         header: {
           'content-Type': 'application/x-www-form-urlencoded',

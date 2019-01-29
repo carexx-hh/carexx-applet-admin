@@ -6,7 +6,7 @@
 <!--切换内容部分start-->
 <scroll-view class='mySwiper' scroll-y="true" style="height:{{height}}px;overflow-y:scroll">
  <block wx:for="{{coupons}}" wx:key="">
-        <view class='item' bindtap='clickDetails' data-certificationstatus='{{item.certificationStatus}}' data-id='{{item.id}}' data-realname='{{item.realName}}' data-idno='{{item.idNo}}' data-sex='{{item.sex}}' data-birthday='{{item.birthday}}' data-phone='{{item.phone}}' data-address='{{item.address}}' data-instname='{{item.instName}}' data-serviceInstname='{{item.serviceInstName}}'>
+        <view class='item' bindtap='clickDetails' data-certificationstatus='{{item.certificationStatus}}' data-id='{{item.id}}' data-realname='{{item.realName}}' data-idno='{{item.idNo}}' data-sex='{{item.sex}}' data-birthday='{{item.birthday}}' data-phone='{{item.phone}}' data-address='{{item.address}}' data-instname='{{item.instName}}' data-serviceinstname='{{item.serviceInstName}}'>
              <view style='width:160rpx;height:160rpx;'>
                <image src='../manage/images/img.png' style="width:160rpx;height:160rpx;"></image>
              </view>

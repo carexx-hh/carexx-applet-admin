@@ -6,7 +6,7 @@ Page({
   data: {
     
   },
-
+  
   formSubmit:function(e){
     var that=this;
     console.log('form发生了submit事件，携带数据为：', e.detail.value);
@@ -46,7 +46,6 @@ Page({
                     wx.setStorageSync('token', res.data.data.token)
                     wx.setStorageSync('openId', res.data.data.openId)
                     wx.setStorageSync('instId', res.data.data.instId)
-                    wx.setStorageSync('userId', res.data.data.userId)
                     wx.switchTab({
                       url: '../index/index',
                     })
