@@ -31,6 +31,7 @@ Page({
    */
   onShow: function () {
     var that = this;
+    // 个人信息查询
     wx.request({
       url: app.globalData.baseUrl + '/acluser/get_userId/' + that.data.userId,
       method: 'get',

@@ -34,14 +34,15 @@ Page({
     that.setData({
       id: id,
     }, function () {
+      //进行护工的信息请求
       wx.request({
-        url: app.globalData.baseUrl + '/inststaff/get_id/' + that.data.id,
+        url: app.globalData.baseUrl + '/inststaff/get_staffId/' + that.data.id,
         method: 'get',
         header: {
           'content-Type': 'application/x-www-form-urlencoded',
           'auth-token': that.data.token
         },
-        success: function (res) {
+        success: function (res){
           that.setData({
             coupons: res.data.data
           })
@@ -49,15 +50,16 @@ Page({
       });
     })
   },
+  // 修改完信息进行提交保存
   formSubmit: function (e) {
     var that = this;  
-    var realName = e.detail.value.input_name;
-    var phone = e.detail.value.input_phone;
-    var idNo = e.detail.value.input_idNo;
-    var address = e.detail.value.input_address;
-    var instName = e.detail.value.input_instName;
-    var serviceInstName = e.detail.value.input_serviceInstName;
-    var sex = e.detail.value.input_sex;
+    var realName = e.detail.value.input_name;   //姓名
+    var phone = e.detail.value.input_phone;         //电话
+    var idNo = e.detail.value.input_idNo;           //身份证
+    var address = e.detail.value.input_address;      //地址
+    var instName = e.detail.value.input_instName;      //所属机构
+    var serviceInstName = e.detail.value.input_serviceInstName;    //服务机构
+    var sex = e.detail.value.input_sex;     //性别
     if (realName==''){
       that.setData({
         realName: that.data.coupons.realName
@@ -87,7 +89,7 @@ Page({
         instName: e.detail.value.input_instName
       })
     };
-    // 
+    // 以下if语句判断编辑信息时修改的具体内容
     if (serviceInstName == '') {
       that.setData({
         serviceInstName: that.data.coupons.serviceInstName
@@ -150,6 +152,7 @@ Page({
         sex: 2
       })
     }
+    //提交请求保存修改
     wx.request({
         url: app.globalData.baseUrl + '/inststaff/modify',
         method: 'POST',
@@ -167,10 +170,10 @@ Page({
           serviceInstId: that.data.coupons.serviceInstId,
           sex:that.data.sex,
           photo:'',
-          personType: that.data.coupons.personType,
-          jobStatus: that.data.coupons.jobStatus,
-          entryDate: that.data.entryDate,
-          leaveDate: that.data.leaveDate,
+          personType: that.data.coupons.personType, //人员性质
+          jobStatus: that.data.coupons.jobStatus,   //工作状态
+          entryDate: that.data.entryDate,      //入职日期
+          leaveDate: that.data.leaveDate,       //离职日期
         },
         success: function (res) {
           console.log(res)
@@ -191,7 +194,6 @@ Page({
           }else{
             wx.showToast({
               title: '修改失败',
-              icon: 'success',
               duration: 1500,
             })
           }

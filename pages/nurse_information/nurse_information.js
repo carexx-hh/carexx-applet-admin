@@ -33,6 +33,7 @@ Page({
     that.setData({
       id: id,
     },function(){
+      // 请求护工信息
       wx.request({
         url: app.globalData.baseUrl + '/inststaff/get_staffId/'+that.data.id,
         method: 'get',
@@ -48,6 +49,7 @@ Page({
       });
     })
   },
+  // 取消护工认证
   click_cencel:function(){
     var that=this;
     wx.showModal({
@@ -57,7 +59,7 @@ Page({
       content: '确认取消该护工认证?',
       confirmColor: '#5489FD',
       success(res) {
-        if (res.confirm) {
+        if (res.confirm) {  //点击确认执行取消认证的请求
           wx.request({
             url: app.globalData.baseUrl + '/inststaff/cancel_certification/' + that.data.id,
             method: 'get',
@@ -67,7 +69,7 @@ Page({
             },
             success: function (res) {
               console.log(res)
-              if (res.data.code == 200) {
+              if (res.data.code == 200) {  //返回200时的提示
                 wx.showModal({
                   content: '取消认证成功',
                   showCancel: false,
@@ -98,9 +100,10 @@ Page({
       }
     })
   },
+  // 跳转到编辑信息页面
   click_edit:function(){
      var that=this;
-     app.id=that.data.id
+     app.id=that.data.id  //护工id
      wx.navigateTo({
       url: '../nurse_info_edit/nurse_info_edit',
     })

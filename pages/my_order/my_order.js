@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    switchtab: [
+    switchtab: [  //头部nav状态
       {
         name: '未完成',
       },
@@ -29,13 +29,14 @@ Page({
       instId: wx.getStorageSync('instId')
     });
   },
+  // 点击切换状态（已完成、未完成）
   switchNav: function (e) {
     var that = this;
     var index = e.target.dataset.index;
     that.setData({
       current: index
     }, function () {
-      if (that.data.current == 0) {
+      if (that.data.current == 0) {  //选择未完成时请求数据
         wx.request({
           url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus',
           method: 'post',
@@ -51,13 +52,13 @@ Page({
             console.log(res)
             var timestamp = [];
             for (var i = 0; i < res.data.data.length; i++) {
-              timestamp.push(new Date(res.data.data[i].createTime));
+              timestamp.push(new Date(res.data.data[i].createTime));          //对时间戳进行转换
               var arr = [];
               for (var j = 0; j < timestamp.length; j++) {
-                y = timestamp[j].getFullYear(),
+                  y = timestamp[j].getFullYear(),
                   m = timestamp[j].getMonth() + 1,
                   d = timestamp[j].getDate();
-                arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
+                arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');  //正常格式存到arr数组里
               }
             }
             that.setData({
@@ -66,12 +67,12 @@ Page({
             })
           }
         });
-      } else if (that.data.current == 1) {
+      } else if (that.data.current == 1) {  //选择已完成时请求数据
         wx.request({
           url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus' ,
           method: 'post',
           data: {
-            orderStatus: '5',
+            orderStatus: '5,6',
             serviceStatus: 2
           },
           header: {
@@ -81,14 +82,14 @@ Page({
           success: function (res) {
             console.log(res)
             var timestamp = [];
-            for (var i = 0; i < res.data.data.length; i++) {
-              timestamp.push(new Date(res.data.data[i].createTime));
+            for (var i = 0; i < res.data.data.length; i++) {            //对时间戳进行转换
+              timestamp.push(new Date(res.data.data[i].createTime));    
               var arr = [];
               for (var j = 0; j < timestamp.length; j++) {
                 y = timestamp[j].getFullYear(),
                   m = timestamp[j].getMonth() + 1,
                   d = timestamp[j].getDate();
-                arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
+                arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');       //正常格式存到arr数组里
               }
             };
             that.setData({
@@ -114,7 +115,7 @@ Page({
    */
   onShow: function () {
     var that = this;
-    that.setData({
+    that.setData({         //页面刷新时current默认为未完成，进行还未完成订单的数据请求
       current: 0
     })
     wx.request({
@@ -131,17 +132,17 @@ Page({
       success: function (res) {
         console.log(res)
         var timestamp = [];
-        for (var i = 0; i < res.data.data.length; i++) {
+        for (var i = 0; i < res.data.data.length; i++) {          //对时间戳进行转换
           timestamp.push(new Date(res.data.data[i].createTime));
           var arr = [];
           for (var j = 0; j < timestamp.length; j++) {
             y = timestamp[j].getFullYear(),
               m = timestamp[j].getMonth() + 1,
               d = timestamp[j].getDate();
-            arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
+            arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');      //正常格式存到arr数组里
           }
         }
-        var timestamp1 = [];
+        var timestamp1 = [];      
         for (var m = 0; m < res.data.data.length; m++) {
           timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
           var arr1 = [];
@@ -153,14 +154,15 @@ Page({
         //  console.log(timestamp, timestamp1, newtime,arr1)
         that.setData({
           coupons: res.data.data,
-          time: arr,
-          newtime: newtime,
-          time2: arr1,
+          time: arr,   //显示几月几号
+          newtime: newtime,  //当前时间（未转换）
+          time2: arr1,       //当前时间（几点几分）
           time3: timestamp1
         })  
       }
     });
   },
+  // 点击进入列表详情进行查看
   clickDetails: function (e) {
     var orderNo = e.currentTarget.dataset.orderno
     app.orderNo = orderNo;

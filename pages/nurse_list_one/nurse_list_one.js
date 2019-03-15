@@ -33,6 +33,7 @@ Page({
     that.setData({
       orderNo: orderNo
     })
+    // 请求所有护工数据
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/staff_schedule',
       method: 'post',
@@ -51,6 +52,7 @@ Page({
       }
     });
   },
+  // 选中选择的护工并返回派单页面
   clickDetails:function(e){
     var realName = e.currentTarget.dataset.realname
     var id = e.currentTarget.dataset.id
@@ -60,9 +62,10 @@ Page({
       delta: 1
     })
   },
+  // 快捷搜索护工
   searchSubmitFn: function (e) {
     var that = this;
-    var inputVal = e.detail.value;
+    var inputVal = e.detail.value;  //输入的值
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/staff_schedule',
       method: 'post',

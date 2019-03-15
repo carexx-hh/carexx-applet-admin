@@ -14,7 +14,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.setData({
-      token: wx.getStorageSync('token')
+      token: wx.getStorageSync('token')   //获取token
     });
   },
 
@@ -30,6 +30,7 @@ Page({
    */
   onShow: function () {
     var that=this;
+    // 请求护工信息
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/mapp_all',
       method: 'post',
@@ -42,14 +43,15 @@ Page({
       },
       success: function (res) {
         that.setData({
-          coupons: res.data.data
+          coupons: res.data.data  //请求到的data数据存在自定义coupons数组里
         })
       }
     });
   },
+  // 快捷查询护工
   searchSubmitFn:function(e){
     var that=this;
-    var inputVal = e.detail.value;
+    var inputVal = e.detail.value;  //输入的护工姓名
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/mapp_all',
       method: 'post',
@@ -68,22 +70,22 @@ Page({
       }
     });
   },
+  // 点击进入护工信息详情页面
   clickDetails:function(e){
-    var realName = e.currentTarget.dataset.realname
-    var idNo = e.currentTarget.dataset.idno
-    var phone = e.currentTarget.dataset.phone
-    var address = e.currentTarget.dataset.address
-    var instName = e.currentTarget.dataset.instname
-    var serviceInstName = e.currentTarget.dataset.serviceinstname
-    var id = e.currentTarget.dataset.id
-    app.realName = realName
+    var realName = e.currentTarget.dataset.realname  //护工姓名
+    var idNo = e.currentTarget.dataset.idno          //护工身份证
+    var phone = e.currentTarget.dataset.phone        //护工电话
+    var address = e.currentTarget.dataset.address       //护工地址
+    var instName = e.currentTarget.dataset.instname            //所属机构名称
+    var serviceInstName = e.currentTarget.dataset.serviceinstname     //护工服务机构名称
+    var id = e.currentTarget.dataset.id     //护工id
+    app.realName = realName 
     app.id = id
     app.idNo = idNo
     app.phone = phone
     app.address = address
     app.instName = instName
     app.serviceInstName = serviceInstName
-    // console.log(realName, idNo, phone, address, instName, serviceInstName)
     wx.navigateTo({
       url: '../nurse_information/nurse_information',
     })

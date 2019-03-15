@@ -100,7 +100,7 @@
 </view>
 <!--  -->
 <view class='bottom'>
-<view class='z-price'><text style='color:#767C8C'>合计:</text>￥<text class='shu-zi' style='font-size:46rpx;'>{{coupons.orderAmt}}</text>.00<text style='color:#767C8C'>（共服务{{serviceDays}}天）</text>
+<view class='z-price'><text style='color:#767C8C'>合计:</text>￥<text class='shu-zi' style='font-size:46rpx;'>{{coupons.orderAmt}}</text><text style='color:#767C8C'>（共服务{{serviceDays}}天）</text>
 </view>
 </view>
 

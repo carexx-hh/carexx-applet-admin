@@ -63,7 +63,7 @@
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;'>
 <view class='kind'>
 <view class='kind-name'>订单开始日期</view>
-<view class='t-k-name' style='width:40%;'>
+<view class='t-k-name' style='width:50%;'>
 <text>{{starttime}}</text>
 </view>
 </view>
@@ -103,7 +103,7 @@
 </view>
 </view>
 <!--  -->
-<view class='list' style='padding-left:30rpx;box-sizing:border-box;margin-bottom:178rpx;' wx:else>
+<view class='list' style='padding-left:30rpx;box-sizing:border-box;height:{{bottom_x}};margin-bottom:{{bottom_6}}' wx:else>
 <view class='kind'>
 <view class='kind-name' style='width:50%;'>结算比例</view>
 <view class='date-name' style='width:50%;display:flex;justify-content: flex-end;align-items: center;'>
@@ -112,19 +112,10 @@
     {{start_name}}
     <image src='./images/bottom.png' style="width:21rpx;height:11rpx;margin-left:26rpx;margin-bottom:4rpx;"></image>
     </view>
-  </picker>
+</picker>
 </view>
 </view>
 </view>
-<!--  -->
-<!-- <view class='list' style='padding-left:30rpx;box-sizing:border-box;margin-top:20rpx;height:170rpx;margin-bottom:178rpx;'>
-<view class='kind' style='display:block;border-bottom:none;'>
-<view class='kind-name' style='line-height:99rpx;width:100%;'>备注</view>
-<view class='t-k-name' style='width:100%;line-height:40rpx;display:block'>
-<input name='input_text' type='text' maxlength="255"  bindinput="onmarkInput"  placeholder='请在这里输入备注内容' placeholder-style='font-size:28rpx;color:rgba(165,170,184,1);' style='height:70rpx;width:100%;color:#3B404E;'></input>
-</view>
-</view>
-</view> -->
-<button wx:if="{{project.serviceStatus!==3}}" class="button" bindtap="regist" form-type='submit'>{{orderStatus==1?"确认派单":"再次派单"}}</button>
+<button wx:if="{{project.serviceStatus!==3}}" class="button" bindtap="regist" form-type='submit' style='bottom:{{bottom}}'>{{orderStatus==1?"确认派单":"再次派单"}}</button>
 <view wx:if="{{project.serviceStatus!==3}}" class="buuton-t"></view>
 

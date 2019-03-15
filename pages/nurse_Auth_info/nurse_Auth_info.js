@@ -22,16 +22,16 @@ Page({
    */
   onShow: function () {
     var that = this;
-    var certificationStatus = app.certificationStatus;
-    var id = app.id;
-    var instName = app.instName;
-    var serviceInstName = app.serviceInstName;
-    var realName = app.realName;
-    var idNo = app.idNo;
-    var sex = app.sex;
-    var birthday = app.birthday;
-    var phone = app.phone;
-    var address = app.address;
+    var certificationStatus = app.certificationStatus;    //护工认证状态
+    var id = app.id;                                //护工主键id
+    var instName = app.instName;                    //护工所属机构名称
+    var serviceInstName = app.serviceInstName;      //护工服务机构名称
+    var realName = app.realName;               //护工姓名
+    var idNo = app.idNo;                     //护工身份证
+    var sex = app.sex;                       //护工性别
+    var birthday = app.birthday;        //护工出生日期
+    var phone = app.phone;             //护工电话
+    var address = app.address;         //护工地址
     that.setData({
       nurse_Status: certificationStatus,
       id: id,
@@ -44,6 +44,7 @@ Page({
       phone: phone,
       address: address,
     })
+    // 1为未认证  2已通过认证  3已拒绝
     if (certificationStatus==1){
       that.setData({
         show: true
@@ -62,6 +63,7 @@ Page({
       })
     };
   },
+  // 通过该护工认证
   click_t_g:function(){
    var that=this;
     wx.showModal({
@@ -71,7 +73,7 @@ Page({
       content: '确认该护工通过认证?',
       confirmColor: '#5489FD',
       success(res) {
-        if (res.confirm) {
+        if (res.confirm) {  //点击确认是进行请求
           wx.request({
             url: app.globalData.baseUrl + '/inststaff/agree_certification/' + that.data.id,
             method: 'get',
@@ -81,7 +83,7 @@ Page({
             },
             success: function (res) {
               console.log(res)
-             if(res.data.code==200){
+             if(res.data.code==200){  //返回200表示认证成功
                wx.showToast({
                  title: '认证成功',
                  icon: 'success',
@@ -96,6 +98,7 @@ Page({
       }
     })
   },
+  // 拒绝该护工的认证
   click_pass:function(){
     var that = this;
     wx.showModal({
@@ -115,7 +118,7 @@ Page({
             },
             success: function (res) {
               console.log(res)
-              if (res.data.code == 200) {
+              if (res.data.code == 200) {  //拒绝成功时页面
                 wx.showModal({
                   content: '拒绝认证成功',
                   showCancel:false,

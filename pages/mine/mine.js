@@ -34,6 +34,7 @@ Page({
    */
   onShow: function () {
     var that=this;
+    // 页面刷新监测新消息
     wx.request({
       url: app.globalData.baseUrl + '/msg/count_unread/',
       method: 'get',
@@ -48,6 +49,7 @@ Page({
          })
       }
     });
+    // 页面刷新监测新的护工请求认证
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/all_by_certification_status/1',
       method: 'get',
@@ -57,7 +59,7 @@ Page({
       },
       success: function (res) {
         console.log(res)
-        if (res.data.data.length > 0) {
+        if (res.data.data.length > 0) {   //根据返回数据长度判断页面显示状态
           that.setData({
             show: true,
             message_nurse: res.data.data.length
@@ -69,6 +71,7 @@ Page({
         }
       }
     });
+    // 请求护工管理员的详细信息
     wx.request({
       url: app.globalData.baseUrl + '/acluser/get_userId',
       method: 'get',
@@ -86,23 +89,27 @@ Page({
  
 
   },
+  // 进入个人信息详情页
   click_details:function(){
      var that=this;
      wx.navigateTo({
        url: '../personal_information/personal_information',
      })
   },
+  // 进入护工认证详情页
   click_nurse:function(){
     var that = this;
     wx.navigateTo({
       url: '../nurse_certification/nurse_certification',
     })  
   },
+  // 进入消息通知详情页
   click_message:function(){
     wx.navigateTo({
       url: '../messages/messages',
     })  
   },
+  // 进入我的订单详情页
   click_order:function(){
     wx.navigateTo({
       url: '../my_order/my_order',

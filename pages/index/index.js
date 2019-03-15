@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    switchtab: [
+    switchtab: [ //头部nav状态选项
     {
     name: '未派单',
     },
@@ -17,8 +17,8 @@ Page({
     ],
     current:0,
     coupons:[],
-    windowHeight:'',
-    height:'',
+    windowHeight:'', //设备高度
+    height:'',  //scroll高度
 
 
   },
@@ -27,26 +27,27 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    if (wx.getStorageSync('token')!=''){
+    if (wx.getStorageSync('token')!=''){   //页面初始化监测是否存在token，存在则保存token，instid，userid到data
       that.setData({
         token: wx.getStorageSync('token'),
         instId: wx.getStorageSync('instId'),
         userId: wx.getStorageSync('userId')
       });
-    }else{
+    }else{                              //不存在则跳转页面到登录页
       wx.redirectTo({
         url: '../login/login',
       })
     }
     
   },
+  // 点击选项卡功能（未派单、已派单）
   switchNav: function (e){
     var that = this;
     var index = e.target.dataset.index;
     that.setData({
         current: index
     },function(){
-      if(that.data.current==0){
+      if(that.data.current==0){  //如果current为0，则请求未派单的数据
         wx.request({
           url: app.globalData.baseUrl + '/customerorder/wait_schedule',
           method: 'get',
@@ -56,35 +57,35 @@ Page({
           },
           success: function (res) {
             var timestamp = [];
-            for (var i = 0; i < res.data.data.length; i++) {
+            for (var i = 0; i < res.data.data.length; i++) {        //创建时间处理  
               timestamp.push(new Date(res.data.data[i].createTime));
               var arr = [];
-              for (var j = 0; j < timestamp.length; j++) {
-                y = timestamp[j].getFullYear(),
+              for (var j = 0; j < timestamp.length; j++) {    //如果时间不是当天，则显示几月几号
+                  y = timestamp[j].getFullYear(),
                   m = timestamp[j].getMonth() + 1,
                   d = timestamp[j].getDate();
-                arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
+                  arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
               }
             }
             var timestamp1 = [];
-            for (var m = 0; m < res.data.data.length; m++) {
+            for (var m = 0; m < res.data.data.length; m++) {           //判断时间是否为当天，如果是当天则只显示几点几分
               timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
               var arr1 = [];
               for (var k = 0; k < timestamp.length; k++) {
                 arr1.push(timestamp[k].toTimeString().substr(0, 5));
               }
             }
-            var newtime = new Date().toDateString()
+            var newtime = new Date().toDateString() //获取当天时间
             that.setData({
               coupons: res.data.data,
-              time: arr,
-              newtime: newtime,
-              time2: arr1,
+              time: arr,  //当天之前下单的时间
+              newtime: newtime, //当天的时间，用作判断下单的时间
+              time2: arr1,  //当天下单的时间
               time3: timestamp1
             })
           }
         });
-      } else if (that.data.current == 1){
+      } else if (that.data.current == 1) {        //如果current为1，则请求已派单的数据
         wx.request({
           url: app.globalData.baseUrl + '/customerorder/do_orderSchedule',
           method: 'post',
@@ -92,7 +93,7 @@ Page({
             'content-Type': 'application/x-www-form-urlencoded',
             'auth-token': that.data.token
           },
-          success: function (res) {
+          success: function (res) {            //以下数据处理同上
             var timestamp = [];
             for (var i = 0; i < res.data.data.length; i++) {
               timestamp.push(new Date(res.data.data[i].createTime));
@@ -125,16 +126,6 @@ Page({
       }
     });
   },
-  btntap:function(){
-    wx.switchTab({
-      url: '../index/index',
-    })
-  },
-  operationClick:function(event){
-    var that = this;
-   
-     
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -149,7 +140,7 @@ Page({
     var that = this;
     that.setData({
       current:0
-    })
+    })                   //页面刷新默认为未派单状态，请求未派单状态下的数据
       wx.request({
         url: app.globalData.baseUrl + '/customerorder/wait_schedule',
         method: 'get',
@@ -157,7 +148,7 @@ Page({
           'content-Type': 'application/x-www-form-urlencoded',
           'auth-token': that.data.token
         },
-        success: function (res){
+        success: function (res){  //以下数据处理同上
           var timestamp = [];
           for (var i = 0; i < res.data.data.length; i++) {
             timestamp.push(new Date(res.data.data[i].createTime));
@@ -188,10 +179,11 @@ Page({
         }
       });
   },
+  // 点击列表跳转到派单详情页面
   clickDetails: function(e){
-    var orderNo = e.currentTarget.dataset.orderno
+    var orderNo = e.currentTarget.dataset.orderno  //订单号
     app.orderNo = orderNo; 
-    var orderStatus = e.currentTarget.dataset.orderstatus
+    var orderStatus = e.currentTarget.dataset.orderstatus  //订单状态
     app.orderStatus = orderStatus;
     wx.navigateTo({
       url: '../details/details',

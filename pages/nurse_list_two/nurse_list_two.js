@@ -35,6 +35,7 @@ Page({
       orderNo: orderNo,
       serviceStaffId: serviceStaffId
     })
+    // 请求所有护工数据
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/staff_schedule',
       method: 'post',
@@ -49,13 +50,13 @@ Page({
         console.log(res)
         var arr=new Array;
         for(var i=0;i<res.data.data.length;i++){
-          if (res.data.data[i].id == that.data.serviceStaffId){
+          if (res.data.data[i].id == that.data.serviceStaffId){  //把后台返回的数据进行处理，分为当前正在服务的护工和其他护工
             arr.push(res.data.data[i])
           }
         }
         var arr1 = new Array;
         for (var j = 0; j< res.data.data.length; j++) {
-          if (res.data.data[j].id !== that.data.serviceStaffId) {
+          if (res.data.data[j].id !== that.data.serviceStaffId) {  //把后台返回的数据进行处理，分为当前正在服务的护工和其他护工
             arr1.push(res.data.data[j])
           }
         }
@@ -67,6 +68,7 @@ Page({
       }
     });
   },
+  // 选择其他护工并返回再次派单页面
   clickDetails: function (e) {
     var realName = e.currentTarget.dataset.realname
     var id = e.currentTarget.dataset.id
@@ -76,6 +78,7 @@ Page({
       delta: 1
     })
   },
+  // 快捷搜索护工
   searchSubmitFn: function (e) {
     var that = this;
     var inputVal = e.detail.value;
@@ -93,7 +96,7 @@ Page({
       success: function (res) {
         console.log(res)
         var arr2 = new Array;
-        for (var j = 0; j < res.data.data.length; j++) {
+        for (var j = 0; j < res.data.data.length; j++) {  //搜索结果同样去除当前正在服务的护工，把其他搜索结果放进其他护工选项
           if (res.data.data[j].id !== that.data.serviceStaffId) {
             arr2.push(res.data.data[j])
           }

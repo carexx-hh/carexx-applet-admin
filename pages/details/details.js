@@ -6,11 +6,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isShow:'',
+    isShow:'',  //页面显示状态判断
     timeindex: 0,
-    timearray: [],
-    start_name:'请选择',
-    nurse_name:'请选择'
+    timearray: [],  //自定义时间数组
+    start_name:'请选择',  //开始时间初始值
+    nurse_name:'请选择'     //护工名字初始值
   },
   /**
    * 生命周期函数--监听页面加载
@@ -18,12 +18,13 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.setData({
-      token: wx.getStorageSync('token')
+      token: wx.getStorageSync('token')   //加载本地token到data
     });
   },
+  // 选择结算比例
   bindTimeChange: function (e) {
     var that=this;
-    var nurseid = that.data.nurse_id[e.detail.value]
+    var nurseid = that.data.nurse_id[e.detail.value]  //护工的id
     console.log(e.detail.value, nurseid)
     this.setData({
       timeindex: e.detail.value,
@@ -43,12 +44,32 @@ Page({
    */
   onShow: function (){
     var that = this;
-    var orderNo = app.orderNo;
-    var orderStatus = app.orderStatus;
+    wx.getSystemInfo({   //这里做机型判断
+      success: function (res) {
+        console.log(res)
+        if (res.model.search('iPhone X') != -1) {  //如果为iPhonex底部做适配
+          console.log(2)
+          that.setData({
+            isIphoneX: true,   
+            bottom:'68rpx',    //样式修改
+            bottom_x: '320rpx'
+          })
+        }else{
+          that.setData({
+            isIphoneX: false,
+            bottom: '0rpx',
+            bottom_6: '178rpx'
+          })
+        }
+      }
+    })　 
+    var orderNo = app.orderNo;  //订单号
+    var orderStatus = app.orderStatus;  //订单状态
     that.setData({
       orderNo: orderNo,
       orderStatus: orderStatus,
     })
+    // 请求订单详情信息
     wx.request({
       url: app.globalData.baseUrl + '/customerorder/detail/' + that.data.orderNo,
       method: 'get',
@@ -58,32 +79,39 @@ Page({
       },
       success: function (res) {
         console.log(res)
+        // 返回数据护工姓名为null且本地没有护工姓名字段且本地没有服务护工id字段
         if (res.data.data[0].staffName == null && !wx.getStorageSync('nurse_name') && !wx.getStorageSync('serviceStaffId')){
           that.setData({
             nurse_name:that.data.nurse_name,
           })
-        } else if (res.data.data[0].staffName !== null && !wx.getStorageSync('nurse_name') && !wx.getStorageSync('serviceStaffId')){
+        }
+        // 返回数据护工姓名不为null且本地没有护工姓名字段且本地没有服务护工id字段
+        else if (res.data.data[0].staffName !== null && !wx.getStorageSync('nurse_name') && !wx.getStorageSync('serviceStaffId')){
           that.setData({
             nurse_name: res.data.data[0].staffName,
             serviceStaffId: res.data.data[0].serviceStaffId,
           })
-        } else if (wx.getStorageSync('nurse_name') && wx.getStorageSync('serviceStaffId')){
+        }
+        // 本地存在护工姓名字段且存在服务护工id字段
+        else if (wx.getStorageSync('nurse_name') && wx.getStorageSync('serviceStaffId')){
         that.setData({
           nurse_name: wx.getStorageSync('nurse_name'),
           serviceStaffId: wx.getStorageSync('serviceStaffId'),
         })
         }
-        timestamp1 = new Date(res.data.data[0].serviceStartTime);
+        timestamp1 = new Date(res.data.data[0].serviceStartTime);  //服务开始时间处理
           y = timestamp1.getFullYear(),
           m = timestamp1.getMonth() + 1,
           d = timestamp1.getDate();
+          // 转换成时间格式存在starttime数组里
         var starttime = y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + timestamp1.toTimeString().substr(0, 8);
         that.setData({
           project: res.data.data[0],
           starttime:starttime,
           serviceStatus: res.data.data[0].serviceStatus,
-          workTypeId: res.data.data[0].workTypeId
+          workTypeId: res.data.data[0].workTypeId   //工种id
         },function(){
+          //获得工种id来请求结算比例
           wx.request({
             url: app.globalData.baseUrl + '/instworktypesettle/list_all/' + that.data.workTypeId,
             method: 'get',
@@ -93,12 +121,12 @@ Page({
             },
             success: function (res){
               console.log(res)
-              var nurse_bl=[];
-              var nurse_id=[];
+              var nurse_bl=[]; //自定义结算比例数组
+              var nurse_id=[];   //自定义结算比例id数组
               for (var i = 0; i <res.data.data.length;i++){
-                nurse_bl.push(res.data.data[i].settleRatio)
+                nurse_bl.push(res.data.data[i].settleRatio)   //把返回的数据（结算比例）循环出来放到nurse_bl数组
               };
-              for (var j = 0; j < res.data.data.length; j++) {
+              for (var j = 0; j < res.data.data.length; j++) {  //把返回的数据（结算比例id）循环出来放到nurse_id数组
                 nurse_id.push(res.data.data[j].id)
               };
               console.log(nurse_bl)
@@ -113,22 +141,24 @@ Page({
       }
     });
   },
+  // 点击跳转到选择护工的页面
   choose_nurse:function(e){
     var that=this;
-    var orderNo = that.data.orderNo
-    app.orderNo = orderNo;
-    var serviceStaffId = that.data.serviceStaffId
+    var orderNo = that.data.orderNo   //订单号
+    app.orderNo = orderNo;     
+    var serviceStaffId = that.data.serviceStaffId      //护工服务id
     app.serviceStaffId = serviceStaffId;
-    if (that.data.serviceStatus==null){
+    if (that.data.serviceStatus == null) {  //如果服务状态为空则跳转到nurse_list_one页面来选择护工
       wx.navigateTo({
         url: '../nurse_list_one/nurse_list_one',
       })
-    } else if (that.data.serviceStatus == 1){
+    } else if (that.data.serviceStatus == 1) {  //如果服务状态为1则跳转到nurse_list_two页面来更换护工
       wx.navigateTo({
         url: '../nurse_list_two/nurse_list_two',
       })
     }
   },
+  // 确认派单请求
   regist:function(){
     var that=this;
     wx.request({
@@ -145,14 +175,14 @@ Page({
       },
       success: function (res) {
         console.log(res)
-        if(res.data.code==200){
+        if(res.data.code==200){  //派单成功
           wx.showToast({
             title: '派单成功',
             icon: 'success',
             duration: 2500,
             mask:true
           })
-        }else{
+        }else{  //派单失败
           wx.showToast({
             title: res.data.errorMsg,
             icon: 'none',

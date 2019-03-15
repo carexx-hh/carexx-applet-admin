@@ -138,3 +138,17 @@ color:#FE620D;
   color:rgba(255,255,255,1);
   margin-top: 19rpx;
 }
+.btn{
+  width:214rpx;
+  height:60rpx;
+  background:linear-gradient(90deg,rgba(87,145,253,1) 12%,rgba(80,120,252,1) 100%);
+  border-radius:44rpx;
+  font-size:28rpx;
+  line-height:60rpx;
+  color:#FFFFFF;
+  text-align: center;
+  float: right;
+  margin-right:30rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
