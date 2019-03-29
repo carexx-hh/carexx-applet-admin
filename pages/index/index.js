@@ -57,9 +57,9 @@ Page({
           },
           success: function (res) {
             var timestamp = [];
+            var arr = [];
             for (var i = 0; i < res.data.data.length; i++) {        //创建时间处理  
               timestamp.push(new Date(res.data.data[i].createTime));
-              var arr = [];
               for (var j = 0; j < timestamp.length; j++) {    //如果时间不是当天，则显示几月几号
                   y = timestamp[j].getFullYear(),
                   m = timestamp[j].getMonth() + 1,
@@ -68,9 +68,9 @@ Page({
               }
             }
             var timestamp1 = [];
+            var arr1 = [];
             for (var m = 0; m < res.data.data.length; m++) {           //判断时间是否为当天，如果是当天则只显示几点几分
               timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
-              var arr1 = [];
               for (var k = 0; k < timestamp.length; k++) {
                 arr1.push(timestamp[k].toTimeString().substr(0, 5));
               }
@@ -150,9 +150,9 @@ Page({
         },
         success: function (res){  //以下数据处理同上
           var timestamp = [];
+          var arr = [];
           for (var i = 0; i < res.data.data.length; i++) {
             timestamp.push(new Date(res.data.data[i].createTime));
-            var arr = [];
             for (var j = 0; j < timestamp.length; j++) {
                 y = timestamp[j].getFullYear(),
                 m = timestamp[j].getMonth() + 1,
@@ -161,9 +161,9 @@ Page({
             }
           }
             var timestamp1 = [];
+            var arr1 = [];
             for (var m = 0; m < res.data.data.length; m++) {
               timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
-              var arr1 = [];
               for (var k = 0; k < timestamp.length; k++) {
                 arr1.push(timestamp[k].toTimeString().substr(0, 5));
               }

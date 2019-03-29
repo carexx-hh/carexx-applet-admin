@@ -7,10 +7,29 @@ Page({
    */
   data: {
     isShow:'',  //页面显示状态判断
-    timeindex: 0,
+    token:'',   //token
+    //样式修改
+    isIphoneX: '',//是否iphonex
+    bottom:'',    //底部样式
+    bottom_x: '',//底部样式
+    bottom_6: '',//底部样式
+    //订单状态
+    orderNo: '',   //订单号
+    orderStatus: '',   //订单状态
+    timeindex: 0,  //选定日期
     timearray: [],  //自定义时间数组
     start_name:'请选择',  //开始时间初始值
-    nurse_name:'请选择'     //护工名字初始值
+    nurse_name:'请选择',     //护工名字初始值
+    serviceStaffId:'', //服务护工
+    starttime:'', //订单开始日期
+    nurseid:'',  //护工的id
+    project: '',// 订单全部信息
+    serviceStatus: '',//订单服务状态
+    workTypeId: '',  //工种id
+    schedulingTypes:['当前班次','下个班次'],   //班次数据
+    schedulingType:'', //选中的班次  --两次派单时显示
+
+
   },
   /**
    * 生命周期函数--监听页面加载
@@ -31,6 +50,15 @@ Page({
       start_name: this.data.nurse_bl[e.detail.value],
       nurseid: nurseid
     })
+  },
+  //   选择班次
+  bindSchedulingTypeChange:function (e) {
+    
+    console.log(e.detail.value)
+    this.setData({
+      schedulingType: Number(e.detail.value)
+    })
+    console.log(this.data)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -106,37 +134,37 @@ Page({
           // 转换成时间格式存在starttime数组里
         var starttime = y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + timestamp1.toTimeString().substr(0, 8);
         that.setData({
-          project: res.data.data[0],
-          starttime:starttime,
-          serviceStatus: res.data.data[0].serviceStatus,
-          workTypeId: res.data.data[0].workTypeId   //工种id
-        },function(){
-          //获得工种id来请求结算比例
-          wx.request({
-            url: app.globalData.baseUrl + '/instworktypesettle/list_all/' + that.data.workTypeId,
-            method: 'get',
-            header: {
-              'content-Type': 'application/x-www-form-urlencoded',
-              'auth-token': that.data.token
-            },
-            success: function (res){
-              console.log(res)
-              var nurse_bl=[]; //自定义结算比例数组
-              var nurse_id=[];   //自定义结算比例id数组
-              for (var i = 0; i <res.data.data.length;i++){
-                nurse_bl.push(res.data.data[i].settleRatio)   //把返回的数据（结算比例）循环出来放到nurse_bl数组
-              };
-              for (var j = 0; j < res.data.data.length; j++) {  //把返回的数据（结算比例id）循环出来放到nurse_id数组
-                nurse_id.push(res.data.data[j].id)
-              };
-              console.log(nurse_bl)
-              that.setData({
-                timearray: res.data.data,
-                nurse_bl: nurse_bl,
-                nurse_id: nurse_id,
-              })
-            }
-          });
+            project: res.data.data[0],
+            starttime:starttime,
+            serviceStatus: res.data.data[0].serviceStatus,
+            workTypeId: res.data.data[0].workTypeId   //工种id
+        },function () {
+            //获得工种id来请求结算比例
+            wx.request({
+                url: app.globalData.baseUrl + '/instworktypesettle/list_all/' + that.data.workTypeId,
+                method: 'get',
+                header: {
+                    'content-Type': 'application/x-www-form-urlencoded',
+                    'auth-token': that.data.token
+                },
+                success: function (res){
+                    console.log(res)
+                    var nurse_bl=[]; //自定义结算比例数组
+                    var nurse_id=[];   //自定义结算比例id数组
+                    for (var i = 0; i <res.data.data.length;i++){
+                        nurse_bl.push(res.data.data[i].settleRatio)   //把返回的数据（结算比例）循环出来放到nurse_bl数组
+                    };
+                    for (var j = 0; j < res.data.data.length; j++) {  //把返回的数据（结算比例id）循环出来放到nurse_id数组
+                        nurse_id.push(res.data.data[j].id)
+                    };
+                    that.setData({
+                        timearray: res.data.data,
+                        nurse_bl: nurse_bl,
+                        nurse_id: nurse_id
+                    })
+                    console.dir(that.data)
+                }
+            });
         })
       }
     });
@@ -161,14 +189,20 @@ Page({
   // 确认派单请求
   regist:function(){
     var that=this;
-    wx.request({
-      url: app.globalData.baseUrl + '/customerorderschedule/mapp_add',
-      method: 'post',
-      data: {
+    var data = that.data.orderStatus==1?{
         orderNo: that.data.orderNo,
         serviceStaffId: that.data.serviceStaffId,
         workTypeSettleId: that.data.nurseid
-      },
+      }:{
+        orderNo: that.data.orderNo,
+        serviceStaffId: that.data.serviceStaffId,
+        workTypeSettleId: that.data.nurseid,
+        schedulingType:that.data.schedulingType
+      }
+    wx.request({
+      url: app.globalData.baseUrl + '/customerorderschedule/mapp_add',
+      method: 'post',
+      data: data,
       header: {
         'content-Type': 'application/x-www-form-urlencoded',
         'auth-token': that.data.token
