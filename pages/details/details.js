@@ -199,32 +199,62 @@ Page({
         workTypeSettleId: that.data.nurseid,
         schedulingType:that.data.schedulingType
       }
-    wx.request({
-      url: app.globalData.baseUrl + '/customerorderschedule/mapp_add',
-      method: 'post',
-      data: data,
-      header: {
-        'content-Type': 'application/x-www-form-urlencoded',
-        'auth-token': that.data.token
-      },
-      success: function (res) {
-        console.log(res)
-        if(res.data.code==200){  //派单成功
-          wx.showToast({
-            title: '派单成功',
-            icon: 'success',
-            duration: 2500,
-            mask:true
-          })
-        }else{  //派单失败
-          wx.showToast({
-            title: res.data.errorMsg,
-            icon: 'none',
-            duration: 2500
-          })
-        }
+      if(that.data.orderStatus==1){
+        wx.request({
+          url: app.globalData.baseUrl + '/customerorderschedule/mapp_add',
+          method: 'post',
+          data: data,
+          header: {
+            'content-Type': 'application/x-www-form-urlencoded',
+            'auth-token': that.data.token
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.data.code == 200) {  //派单成功
+              wx.showToast({
+                title: '派单成功',
+                icon: 'success',
+                duration: 2500,
+                mask: true
+              })
+            } else {  //派单失败
+              wx.showToast({
+                title: res.data.errorMsg,
+                icon: 'none',
+                duration: 2500
+              })
+            }
+          }
+        });
+      }else{
+        wx.request({
+          url: app.globalData.baseUrl + '/customerorderschedule/mapp_add_again',
+          method: 'post',
+          data: data,
+          header: {
+            'content-Type': 'application/x-www-form-urlencoded',
+            'auth-token': that.data.token
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.data.code == 200) {  //派单成功
+              wx.showToast({
+                title: '派单成功',
+                icon: 'success',
+                duration: 2500,
+                mask: true
+              })
+            } else {  //派单失败
+              wx.showToast({
+                title: res.data.errorMsg,
+                icon: 'none',
+                duration: 2500
+              })
+            }
+          }
+        });
       }
-    });
+    
   },
   /**
    * 生命周期函数--监听页面隐藏
