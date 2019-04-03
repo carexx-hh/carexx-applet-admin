@@ -44,6 +44,7 @@ Page({
   switchNav: function (e){
     var that = this;
     var index = e.target.dataset.index;
+    wx.setStorageSync('current', index);
     that.setData({
         current: index
     },function(){
@@ -139,10 +140,49 @@ Page({
   onShow: function () {
     var that = this;
     that.setData({
-      current:0
-    })                   //页面刷新默认为未派单状态，请求未派单状态下的数据
+      current: wx.getStorageSync('current')
+    })
+    if(that.data.current == 0){
       wx.request({
         url: app.globalData.baseUrl + '/customerorder/wait_schedule',
+        method: 'get',
+        header: {
+          'content-Type': 'application/x-www-form-urlencoded',
+          'auth-token': that.data.token
+        },
+        success: function (res) {  //以下数据处理同上
+          var timestamp = [];
+          var arr = [];
+          for (var i = 0; i < res.data.data.length; i++) {
+            timestamp.push(new Date(res.data.data[i].createTime));
+            for (var j = 0; j < timestamp.length; j++) {
+              y = timestamp[j].getFullYear(),
+                m = timestamp[j].getMonth() + 1,
+                d = timestamp[j].getDate();
+              arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
+            }
+          }
+          var timestamp1 = [];
+          var arr1 = [];
+          for (var m = 0; m < res.data.data.length; m++) {
+            timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
+            for (var k = 0; k < timestamp.length; k++) {
+              arr1.push(timestamp[k].toTimeString().substr(0, 5));
+            }
+          }
+          var newtime = new Date().toDateString()
+          that.setData({
+            coupons: res.data.data,
+            time: arr,
+            newtime: newtime,
+            time2: arr1,
+            time3: timestamp1
+          })
+        }
+      });
+    } else {
+      wx.request({
+        url: app.globalData.baseUrl + '/customerorder/do_orderSchedule',
         method: 'get',
         header: {
           'content-Type': 'application/x-www-form-urlencoded',
@@ -178,6 +218,7 @@ Page({
           })
         }
       });
+    }
   },
   // 点击列表跳转到派单详情页面
   clickDetails: function(e){

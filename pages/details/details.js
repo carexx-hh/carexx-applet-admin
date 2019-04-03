@@ -199,6 +199,7 @@ Page({
         workTypeSettleId: that.data.nurseid,
         schedulingType:that.data.schedulingType
       }
+      wx.setStorageSync('current', 1);
       if(that.data.orderStatus==1){
         wx.request({
           url: app.globalData.baseUrl + '/customerorderschedule/mapp_add',
@@ -214,9 +215,14 @@ Page({
               wx.showToast({
                 title: '派单成功',
                 icon: 'success',
-                duration: 2500,
+                duration: 1500,
                 mask: true
               })
+              setTimeout(function () {
+                wx.switchTab({
+                  url: '../index/index',
+                })
+              }, 1500)
             } else {  //派单失败
               wx.showToast({
                 title: res.data.errorMsg,
@@ -241,9 +247,14 @@ Page({
               wx.showToast({
                 title: '派单成功',
                 icon: 'success',
-                duration: 2500,
+                duration: 1500,
                 mask: true
               })
+              setTimeout(function () {
+                wx.switchTab({
+                  url: '../index/index',
+                })
+              }, 1500)
             } else {  //派单失败
               wx.showToast({
                 title: res.data.errorMsg,
