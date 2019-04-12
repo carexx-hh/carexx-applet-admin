@@ -87,8 +87,13 @@ Page({
                wx.showToast({
                  title: '认证成功',
                  icon: 'success',
-                 duration: 1500
+                 duration: 1000
                })
+               setTimeout(function () {
+                 wx.switchTab({
+                   url: '../nurse_certification/nurse_certification',
+                 })
+               }, 1000)
              }
             }
           });
