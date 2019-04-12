@@ -85,7 +85,7 @@
 <!--  -->
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;'> 
 <view class='kind'>
-<view class='kind-name' style='width:50%;'>{{orderStatus==1?"选择护工":"更换护工"}}</view>
+<view class='kind-name serviceStaffId' style='width:50%;'>{{orderStatus==1?"选择护工":"更换护工"}}</view>
 <view class='date-name' style='width:50%;display:flex;justify-content: flex-end;align-items:center;' bindtap='choose_nurse'>
 <view class="picker" style='font-size:14px;color:#A5AAB8'>{{nurse_name}}</view>
 <image wx:if="{{project.serviceStatus!==3}}" src='./images/bottom.png' style="width:21rpx;height:11rpx;margin-left:26rpx;margin-bottom:-4rpx;transform:rotate(-90deg);"></image>
@@ -95,7 +95,7 @@
 <!--结算比例  -->
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;margin-bottom:79rpx' wx:if="{{project.serviceStatus==3}}"> 
 <view class='kind'>
-<view class='kind-name' style='width:50%;'>结算比例</view>
+<view class='kind-name workTypeSettleId' style='width:50%;'>结算比例</view>
 <view class='date-name' style='width:50%;display:flex;justify-content: flex-end;align-items:center;' bindtap='choose_nurse'>
 <view class="picker" style='font-size:14px;color:#A5AAB8'>{{project.settleRatio}}</view>
 <image wx:if="{{project.serviceStatus!==3}}" src='./images/bottom.png' style="width:21rpx;height:11rpx;margin-left:26rpx;margin-bottom:-4rpx;transform:rotate(-90deg);"></image>
@@ -105,9 +105,9 @@
 <!-- 结算比例 -->
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;height:{{bottom_x}};margin-bottom:{{orderStatus==1?bottom_6:"0"}}' wx:else>
 <view class='kind'>
-<view class='kind-name' style='width:50%;'>结算比例</view>
+<view class='kind-name workTypeSettleId' style='width:50%;'>结算比例</view>
 <view class='date-name' style='width:50%;display:flex;justify-content: flex-end;align-items: center;'>
-    <picker bindchange="bindTimeChange" name='input_starttime'  value="{{timearray[timeindex]}}" range="{{nurse_bl}}"class='picker-time' style='width:50%;display:flex;justify-content: flex-end;align-items:center;'>
+    <picker bindchange="bindTimeChange" name='input_starttime'  value="{{timearray[timeindex]}}" range="{{nurse_bl}}" class='picker-time' style='width:50%;display:flex;justify-content: flex-end;align-items:center;'>
         <view class="picker" style='font-size:14px;color:#A5AAB8;float:left;'>
         {{start_name}}
         <image src='./images/bottom.png' style="width:21rpx;height:11rpx;margin-left:26rpx;margin-bottom:4rpx;"></image>
@@ -120,7 +120,7 @@
 <!-- 班次选择 -->
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;height:{{bottom_x}};margin-bottom:{{bottom_6}}' wx:if="{{project.serviceStatus!=3&&orderStatus!=1}}">
 <view class='kind'>
-<view class='kind-name' style='width:50%;'>班次选择</view>
+<view class='kind-name schedulingType' style='width:50%;'>班次选择</view>
 <view class='date-name' style='width:50%;display:flex;justify-content: flex-end;align-items: center;'>
     <picker bindchange="bindSchedulingTypeChange" name='select_schedulingType'  value="{{index}}" range="{{schedulingTypes}}"class='picker-time' style='width:50%;display:flex;justify-content: flex-end;align-items:center;'>
         <view class="picker" style='font-size:14px;color:#A5AAB8;float:left;'>
@@ -133,4 +133,6 @@
 </view>
 <button wx:if="{{project.serviceStatus!==3}}" class="button" bindtap="regist" form-type='submit' style='bottom:{{bottom}}'>{{orderStatus==1?"确认派单":"再次派单"}}</button>
 <view wx:if="{{project.serviceStatus!==3}}" class="buuton-t"></view>
+<!-- 
+-->
 
