@@ -48,6 +48,14 @@ Page({
       },
       success: function (res){
         console.log(res)
+        if (res.data.data[0] === undefined) {
+            that.setData({
+                project: res.data.data,
+                arr: {},
+                arr1: {}
+            })
+            return;
+        }
         var arr=new Array;
         for(var i=0;i<res.data.data.length;i++){
           if (res.data.data[i].id == that.data.serviceStaffId){  //把后台返回的数据进行处理，分为当前正在服务的护工和其他护工

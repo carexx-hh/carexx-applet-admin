@@ -8,7 +8,7 @@
  <!--头部search部分end-->
 <!--切换内容部分start-->
 <scroll-view class='mySwiper' scroll-y="true" style="height:{{height}}px;overflow-y:scroll">
-      <block  wx:for='{{project}}'>
+      <block  wx:for='{{project}}' wx:key="id">
         <view class='item' bindtap='clickDetails' data-realname='{{item.realName}}' data-id='{{item.id}}'>
              <view style='width:160rpx;height:160rpx;'>
                <image src='../manage/images/img.png' style="width:160rpx;height:160rpx;"></image>

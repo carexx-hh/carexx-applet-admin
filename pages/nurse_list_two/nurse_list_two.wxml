@@ -29,7 +29,7 @@
 </view>
 <view style='font-size:30rpx;font-weight:bold;color:#3B404E;margin:38rpx 0 21rpx 29rpx;'>其它护工</view>
 <view class='mySwiper' scroll-y="true" style="height:{{height}}px;overflow-y:scroll">
-      <block  wx:for='{{arr1}}'>
+      <block  wx:for='{{arr1}}' wx:key='id'>
         <view class='item' data-index='{{index}}' bindtap='clickDetails' data-realname='{{item.realName}}' data-id='{{item.id}}'>
              <view style='width:160rpx;height:160rpx;'>
                <image src='../manage/images/img.png' style="width:160rpx;height:160rpx;"></image>
