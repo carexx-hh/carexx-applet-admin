@@ -8,12 +8,12 @@ Page({
    */
   data: {
     switchtab: [ //头部nav状态选项
-    {
-    name: '未派单',
-    },
-    {
-    name: '已派单',
-    }
+        {
+            name: '未派单',
+        },
+        {
+            name: '已派单',
+        }
     ],
     current:0,
     coupons:[],
@@ -44,6 +44,8 @@ Page({
   switchNav: function (e){
     var that = this;
     var index = e.target.dataset.index;
+    //点击活动按钮时直接返回
+    if(that.data.current===index) return;
     wx.setStorageSync('current', index);
     that.setData({
         current: index
@@ -96,23 +98,23 @@ Page({
           },
           success: function (res) {            //以下数据处理同上
             var timestamp = [];
+            var arr = [];
             for (var i = 0; i < res.data.data.length; i++) {
               timestamp.push(new Date(res.data.data[i].createTime));
-              var arr = [];
-              for (var j = 0; j < timestamp.length; j++) {
+            }
+            for (var j = 0; j < timestamp.length; j++) {
                 y = timestamp[j].getFullYear(),
-                  m = timestamp[j].getMonth() + 1,
-                  d = timestamp[j].getDate();
+                m = timestamp[j].getMonth() + 1,
+                d = timestamp[j].getDate();
                 arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
-              }
             }
             var timestamp1 = [];
+            var arr1 = [];
             for (var m = 0; m < res.data.data.length; m++) {
               timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
-              var arr1 = [];
-              for (var k = 0; k < timestamp.length; k++) {
+            }
+            for (var k = 0; k < timestamp.length; k++) {
                 arr1.push(timestamp[k].toTimeString().substr(0, 5));
-              }
             }
             var newtime = new Date().toDateString()
             that.setData({
@@ -155,21 +157,21 @@ Page({
           var arr = [];
           for (var i = 0; i < res.data.data.length; i++) {
             timestamp.push(new Date(res.data.data[i].createTime));
+          }
             for (var j = 0; j < timestamp.length; j++) {
               y = timestamp[j].getFullYear(),
                 m = timestamp[j].getMonth() + 1,
                 d = timestamp[j].getDate();
               arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');
             }
-          }
           var timestamp1 = [];
           var arr1 = [];
           for (var m = 0; m < res.data.data.length; m++) {
             timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
+          }
             for (var k = 0; k < timestamp.length; k++) {
               arr1.push(timestamp[k].toTimeString().substr(0, 5));
             }
-          }
           var newtime = new Date().toDateString()
           that.setData({
             coupons: res.data.data,
@@ -189,33 +191,33 @@ Page({
           'auth-token': that.data.token
         },
         success: function (res){  //以下数据处理同上
-          var timestamp = [];
-          var arr = [];
-          for (var i = 0; i < res.data.data.length; i++) {
-            timestamp.push(new Date(res.data.data[i].createTime));
+            var timestamp = [];
+            var arr = [];
+            for (var i = 0; i < res.data.data.length; i++) {
+                timestamp.push(new Date(res.data.data[i].createTime));
+            }
             for (var j = 0; j < timestamp.length; j++) {
                 y = timestamp[j].getFullYear(),
                 m = timestamp[j].getMonth() + 1,
                 d = timestamp[j].getDate();
-              arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d)+'号');
+            arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d)+'号');
             }
-          }
             var timestamp1 = [];
             var arr1 = [];
             for (var m = 0; m < res.data.data.length; m++) {
-              timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
-              for (var k = 0; k < timestamp.length; k++) {
+                timestamp1.push(new Date(res.data.data[m].createTime).toDateString());
+            }
+            for (var k = 0; k < timestamp.length; k++) {
                 arr1.push(timestamp[k].toTimeString().substr(0, 5));
-              }
             }
             var newtime = new Date().toDateString()
-          that.setData({
-            coupons: res.data.data,   
-            time:arr,
-            newtime:newtime,
-            time2:arr1,
-            time3: timestamp1
-          })
+            that.setData({
+                coupons: res.data.data,   
+                time:arr,
+                newtime:newtime,
+                time2:arr1,
+                time3: timestamp1
+            })
         }
       });
     }
