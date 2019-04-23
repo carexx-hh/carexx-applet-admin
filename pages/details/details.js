@@ -128,14 +128,21 @@ Page({
                     })
                 }
                 timestamp1 = new Date(res.data.data[0].serviceStartTime); //服务开始时间处理
-                y = timestamp1.getFullYear(),
+                    y = timestamp1.getFullYear(),
                     m = timestamp1.getMonth() + 1,
                     d = timestamp1.getDate();
                 // 转换成时间格式存在starttime数组里
                 var starttime = y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + timestamp1.toTimeString().substr(0, 8);
+                timestamp2 = new Date(res.data.data[0].scheduleServiceEndTime); //服务开始时间处理
+                    y = timestamp2.getFullYear(),
+                    m = timestamp2.getMonth() + 1,
+                    d = timestamp2.getDate();
+                // 转换成时间格式存在starttime数组里
+                var endtime = y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + timestamp2.toTimeString().substr(0, 8);
                 that.setData({
                     project: res.data.data[0],
                     starttime: starttime,
+                    endtime: endtime,
                     serviceStatus: res.data.data[0].serviceStatus,
                     workTypeId: res.data.data[0].workTypeId //工种id
                 }, function () {

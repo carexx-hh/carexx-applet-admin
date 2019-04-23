@@ -62,9 +62,9 @@
 <!--  -->
 <view class='list' style='padding-left:30rpx;box-sizing:border-box;'>
 <view class='kind'>
-<view class='kind-name'>订单开始日期</view>
+<view class='kind-name'>服务开始时间</view>
 <view class='t-k-name' style='width:50%;'>
-<text>{{starttime}}</text>
+<text>{{orderStatus==1?starttime:endtime}}</text>
 </view>
 </view>
 </view>
