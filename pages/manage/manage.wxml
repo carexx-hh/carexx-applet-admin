@@ -25,3 +25,8 @@
        </view>
        </block>
 </scroll-view>
+
+<!--切换无数据-->
+<block wx:if='{{no_order}}'>
+    <image class='img' src='./images/record.png' style="width:326rpx;height:319rpx;position:absolute;top:220rpx;left:0;right:0;margin:auto;"></image>
+</block>

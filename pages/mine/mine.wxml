@@ -1,4 +1,4 @@
-<view class='header'>
+<view class='header' bindtap='click_details'>
 <view class='left' style='width:30%'>
 <image  src="{{userInfo.avatarUrl}}"  class='tx'></image>
 </view>
@@ -7,7 +7,7 @@
  <view class='phone' bindtap='bindphone' data-phone='{{phone}}'>{{coupons.account}}</view>
  </view>
  <view style='display:flex;justify-content:flex-end;width:30%;'>
- <image src='./images/fan_h.png' class='j-t' style='width:18rpx;height:30rpx;' bindtap='click_details'></image>
+ <image src='./images/fan_h.png' class='j-t' style='width:18rpx;height:30rpx;' ></image>
  </view>
 </view>
 <view class='middle'>

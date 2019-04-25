@@ -17,6 +17,7 @@ Page({
     ],
     current: 0,
     coupons: [],
+    no_order:false, //无订单
   },
   /**
    * 生命周期函数--监听页面加载
@@ -34,7 +35,8 @@ Page({
     var that = this;
     var index = e.target.dataset.index;
     that.setData({
-      current: index
+      current: index,
+      no_order:false
     }, function () {
       if (that.data.current == 0) {  //选择未完成时请求数据
         wx.request({
@@ -50,20 +52,30 @@ Page({
           },
           success: function (res) {
             console.log(res)
+            //无订单时
+            if(res.data.data.length==0){
+                that.setData({
+                    coupons: [],
+                    no_order: true
+                })
+                return ;
+            }
+            //有订单时
             var timestamp = [];
             for (var i = 0; i < res.data.data.length; i++) {
-              timestamp.push(new Date(res.data.data[i].createTime));          //对时间戳进行转换
-              var arr = [];
-              for (var j = 0; j < timestamp.length; j++) {
-                  y = timestamp[j].getFullYear(),
-                  m = timestamp[j].getMonth() + 1,
-                  d = timestamp[j].getDate();
+            timestamp.push(new Date(res.data.data[i].createTime));          //对时间戳进行转换
+            var arr = [];
+            for (var j = 0; j < timestamp.length; j++) {
+                y = timestamp[j].getFullYear(),
+                m = timestamp[j].getMonth() + 1,
+                d = timestamp[j].getDate();
                 arr.push((m < 10 ? "0" + m : m) + "月" + (d < 10 ? "0" + d : d) + '号');  //正常格式存到arr数组里
-              }
+            }
             }
             that.setData({
-              coupons: res.data.data,
-              time: arr
+                coupons: res.data.data,
+                time: arr,
+                no_order:false
             })
           }
         });
@@ -81,6 +93,15 @@ Page({
           },
           success: function (res) {
             console.log(res)
+            //无订单时
+            if (res.data.data.length == 0) {
+                that.setData({
+                    coupons: [],
+                    no_order: true
+                })
+                return;
+            }
+            //有订单时
             var timestamp = [];
             for (var i = 0; i < res.data.data.length; i++) {            //对时间戳进行转换
               timestamp.push(new Date(res.data.data[i].createTime));    
@@ -95,6 +116,7 @@ Page({
             that.setData({
               coupons: res.data.data,
               time: arr,
+              no_order:false
             })
           }
         });
@@ -116,7 +138,8 @@ Page({
   onShow: function () {
     var that = this;
     that.setData({         //页面刷新时current默认为未完成，进行还未完成订单的数据请求
-      current: 0
+      current: 0,
+      no_order:false
     })
     wx.request({
       url: app.globalData.baseUrl + '/customerorder/by_orderStatus_and_serviceStatus',
@@ -131,6 +154,15 @@ Page({
       },
       success: function (res) {
         console.log(res)
+        //无订单时
+        if (res.data.data.length == 0) {
+            that.setData({
+                coupons: [],
+                no_order: true
+            })
+            return;
+        }
+        //有订单时
         var timestamp = [];
         for (var i = 0; i < res.data.data.length; i++) {          //对时间戳进行转换
           timestamp.push(new Date(res.data.data[i].createTime));
@@ -157,7 +189,8 @@ Page({
           time: arr,   //显示几月几号
           newtime: newtime,  //当前时间（未转换）
           time2: arr1,       //当前时间（几点几分）
-          time3: timestamp1
+          time3: timestamp1,
+          no_order: false
         })  
       }
     });

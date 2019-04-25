@@ -19,6 +19,7 @@ Page({
     coupons:[],
     windowHeight:'', //设备高度
     height:'',  //scroll高度
+    no_order:false, //无数订单
 
 
   },
@@ -48,7 +49,8 @@ Page({
     if(that.data.current===index) return;
     wx.setStorageSync('current', index);
     that.setData({
-        current: index
+        current: index,
+        no_order:false
     },function(){
       if(that.data.current==0){  //如果current为0，则请求未派单的数据
         wx.request({
@@ -59,6 +61,16 @@ Page({
             'auth-token': that.data.token
           },
           success: function (res) {
+              //无数据时，显示无数据，直接返回
+              if(res.data.data.length==0){
+                  that.setData({
+                    no_order: true,
+                    coupons: res.data.data,
+                  })
+                  return;
+                  
+              }
+              //有数据时
             var timestamp = [];
             var arr = [];
             for (var i = 0; i < res.data.data.length; i++) {        //创建时间处理  
@@ -84,7 +96,8 @@ Page({
               time: arr,  //当天之前下单的时间
               newtime: newtime, //当天的时间，用作判断下单的时间
               time2: arr1,  //当天下单的时间
-              time3: timestamp1
+              time3: timestamp1,
+              no_order:false
             })
           }
         });
@@ -97,6 +110,16 @@ Page({
             'auth-token': that.data.token
           },
           success: function (res) {            //以下数据处理同上
+            //无数据时，显示无数据，直接返回
+            if (res.data.data.length == 0) {
+                that.setData({
+                    no_order: true,
+                    coupons: res.data.data,
+                })
+                return;
+
+            }
+            //有数据时
             var timestamp = [];
             var arr = [];
             for (var i = 0; i < res.data.data.length; i++) {
@@ -122,7 +145,8 @@ Page({
               time: arr,
               newtime: newtime,
               time2: arr1,
-              time3: timestamp1
+              time3: timestamp1,
+              no_order:fasle
             })
           }
         });
@@ -153,6 +177,16 @@ Page({
           'auth-token': that.data.token
         },
         success: function (res) {  //以下数据处理同上
+            //无数据时，显示无数据，直接返回
+            if (res.data.data.length == 0) {
+                that.setData({
+                    no_order: true,
+                    coupons: res.data.data,
+                })
+                return;
+
+            }
+            //有数据时
           var timestamp = [];
           var arr = [];
           for (var i = 0; i < res.data.data.length; i++) {
@@ -178,7 +212,8 @@ Page({
             time: arr,
             newtime: newtime,
             time2: arr1,
-            time3: timestamp1
+            time3: timestamp1,
+            no_order:false
           })
         }
       });
@@ -191,6 +226,16 @@ Page({
           'auth-token': that.data.token
         },
         success: function (res){  //以下数据处理同上
+            //无数据时，显示无数据，直接返回
+            if (res.data.data.length == 0) {
+                that.setData({
+                    no_order: true,
+                    coupons: res.data.data,
+                })
+                return;
+
+            }
+            //有数据时
             var timestamp = [];
             var arr = [];
             for (var i = 0; i < res.data.data.length; i++) {
@@ -216,7 +261,8 @@ Page({
                 time:arr,
                 newtime:newtime,
                 time2:arr1,
-                time3: timestamp1
+                time3: timestamp1,
+                no_order:false
             })
         }
       });

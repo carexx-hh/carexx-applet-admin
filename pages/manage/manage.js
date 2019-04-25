@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+      no_order:false
   },
 
   /**
@@ -30,6 +30,9 @@ Page({
    */
   onShow: function () {
     var that=this;
+    that.setData({
+        no_order:false
+    })
     // 请求护工信息
     wx.request({
       url: app.globalData.baseUrl + '/inststaff/mapp_all',
@@ -42,9 +45,20 @@ Page({
         'auth-token': that.data.token
       },
       success: function (res) {
-        that.setData({
-          coupons: res.data.data  //请求到的data数据存在自定义coupons数组里
-        })
+          //无数据时
+          if(res.data.data.length==0){
+            that.setData({
+                coupons: [],
+                no_order:true
+            })
+
+          }else{   //有数据时
+            that.setData({
+                coupons: res.data.data,  //请求到的data数据存在自定义coupons数组里
+                no_order:false
+            })
+
+          }
       }
     });
   },
@@ -64,9 +78,20 @@ Page({
         'auth-token': that.data.token
       },
       success: function (res) {
-        that.setData({
-          coupons: res.data.data
-        })
+        //无数据时
+        if (res.data.data.length == 0) {
+            that.setData({
+                coupons: [],
+                no_order: true
+            })
+
+        } else { //有数据时
+            that.setData({
+                coupons: res.data.data, //请求到的data数据存在自定义coupons数组里
+                no_order: false
+            })
+
+        }
       }
     });
   },
