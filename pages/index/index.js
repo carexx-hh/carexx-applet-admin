@@ -146,7 +146,7 @@ Page({
               newtime: newtime,
               time2: arr1,
               time3: timestamp1,
-              no_order:fasle
+              no_order:false
             })
           }
         });
